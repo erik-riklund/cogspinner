@@ -1,4 +1,5 @@
 import { Hono } from 'hono';
+import { initializeRouter } from '#gear:server/router';
 import type { ServerOptions, ServerMiddleware } from '#type:server';
 
 /**
@@ -6,9 +7,7 @@ import type { ServerOptions, ServerMiddleware } from '#type:server';
  */
 export function createServer (options: ServerOptions = {})
 {
-  const middlewares = [];
-
-  //+ implement loading of options from configuration file.
+  const middlewares: Array<ServerMiddleware> = [];
   //+ implement loading of middlewares based on configuration file.
 
   const server =
@@ -26,9 +25,9 @@ export function createServer (options: ServerOptions = {})
     start: async function ()
     {
       const app = new Hono();
-      app.get('*', async (context) => context.text('Hello world'));
-      // await initializeRouter(app, middlewares, options);
+      await initializeRouter(app, middlewares, options);
 
+      app.get('*', async (context) => context.text('Hello world'));
       return { port: options?.port ?? parseInt(process.env['PORT'] ?? '81'), fetch: app.fetch };
     }
   };
