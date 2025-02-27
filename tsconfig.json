@@ -26,8 +26,9 @@
     "paths": {
       "^*": [ "./*" ],
       "#gear:*": [ "./gears/*/index.ts" ],
-      "#route:/*": [ "./app/routes/*.ts" ],
-      "#type:*": [ "./gears/*/types.d.ts" ]
+      "#route:/*": [ "./workshop/routes/*.ts" ],
+      "#type:*": [ "./gears/*/types.d.ts" ],
+      "#workshop:*": [ "./workshop/*" ]
     }
   },
 

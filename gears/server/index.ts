@@ -4,10 +4,9 @@ import type { ServerOptions, ServerMiddleware } from '#type:server';
 /**
  * ?
  */
-export function createServer ()
+export function createServer (options: ServerOptions = {})
 {
   const middlewares = [];
-  const options: ServerOptions = {};
 
   //+ implement loading of options from configuration file.
   //+ implement loading of middlewares based on configuration file.
