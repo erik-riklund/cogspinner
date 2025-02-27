@@ -1,4 +1,5 @@
 import { createServer } from '#gear:server';
+import { serverOptions } from '#workshop:app.config.ts';
 
 /**
  * The main entry point for the application.
@@ -6,4 +7,4 @@ import { createServer } from '#gear:server';
  * This file is responsible for creating and starting the server. It should not
  * contain any application logic, and is only used to bootstrap the server.
  */
-export default await createServer().start();
+export default await createServer(serverOptions).start();
