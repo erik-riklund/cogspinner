@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    // Enable latest features
     "lib": [ "ESNext", "DOM" ],
     "target": "ESNext",
     "module": "ESNext",
@@ -8,32 +7,29 @@
     "jsx": "react-jsx",
     "allowJs": true,
 
-    // Bundler mode
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "noEmit": true,
 
-    // Best practices
     "strict": true,
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "noFallthroughCasesInSwitch": true,
 
-    // Some stricter flags (disabled by default)
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noPropertyAccessFromIndexSignature": false,
 
-    // Stricter flags (enabled for velocigen)
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "noImplicitReturns": true,
-
-    // path aliases to simplify imports:
     "paths": {
       "^*": [ "./*" ],
       "#gear:*": [ "./gears/*/index.ts" ],
-      "#route:/*": [ "./app/routes/*.ts" ]
+      "#route:/*": [ "./app/routes/*.ts" ],
+      "#type:*": [ "./gears/*/types.d.ts" ]
     }
-  }
+  },
+
+  "exclude": [ "node_modules" ]
 }
