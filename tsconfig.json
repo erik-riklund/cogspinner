@@ -24,13 +24,13 @@
     "noPropertyAccessFromIndexSignature": false,
 
     "paths": {
-      "^*": [ "./*" ],
+      "~*": [ "./*" ],
       "#gear:*": [ "./gears/*/index.ts" ],
       "#route:/*": [ "./workshop/routes/*.ts" ],
+      "#tasks:*": [ "./routines/*" ],
       "#type:*": [ "./gears/*/types.d.ts" ],
       "#workshop:*": [ "./workshop/*" ]
     }
   },
-
   "exclude": [ "node_modules" ]
 }
