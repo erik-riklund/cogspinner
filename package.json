@@ -4,12 +4,18 @@
   "module": "main.ts",
   "type": "module",
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "concurrently": "^9.1.2"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
     "hono": "^4.7.2"
+  },
+  "scripts": {
+    "dev": "conc \"bun dev:app\" \"bun dev:tasks\" --names \"app,tasks\" --prefix-colors \"cyan,yellow\"",
+    "dev:app": "bun --no-clear-screen --watch main.ts",
+    "dev:tasks": "bun --no-clear-screen --watch gears/routines/index.ts"
   }
 }
