@@ -9,3 +9,11 @@ export async function initializeRouter (server: Hono,
 {
   //+ implement mounting of registered middlewares and routes.
 }
+
+/**
+ * ?
+ */
+async function loadRouteModules ()
+{
+
+}

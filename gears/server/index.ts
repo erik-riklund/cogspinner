@@ -25,9 +25,8 @@ export function createServer (options: ServerOptions = {})
     start: async function ()
     {
       const app = new Hono();
-      await initializeRouter(app, middlewares, options);
 
-      app.get('*', async (context) => context.text('Hello world'));
+      await initializeRouter(app, middlewares, options);
       return { port: options?.port ?? parseInt(process.env['PORT'] ?? '81'), fetch: app.fetch };
     }
   };
