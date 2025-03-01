@@ -1,0 +1,19 @@
+{
+  "test":
+  {
+    "prefix": "task",
+    "description": "Boilerplate for a basic task.",
+    "body": [
+      "import { task } from '#gear:routines';\n",
+      "/**",
+      " * ?",
+      " */",
+      "export default task(",
+      "  async (context) =>",
+      "  {",
+      "",
+      "  }",
+      ");"
+    ]
+  }
+}

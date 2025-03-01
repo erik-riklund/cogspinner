@@ -16,6 +16,6 @@
   "scripts": {
     "dev": "conc \"bun dev:app\" \"bun dev:tasks\" --names \"app,tasks\" --prefix-colors \"cyan,yellow\"",
     "dev:app": "bun --no-clear-screen --watch main.ts",
-    "dev:tasks": "bun --no-clear-screen --watch gears/routines/index.ts"
+    "dev:tasks": "bun --no-clear-screen --watch gears/routines/index.ts -d"
   }
 }
