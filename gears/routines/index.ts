@@ -1,7 +1,8 @@
 import { Glob } from 'bun';
 import { watch } from 'fs';
 
-import { registerTask, registerTaskFromFile, runTask, runTasks, runSequence } from './cogs/manager';
+import { createWatcher } from './cogs/watcher';
+import { registerTask, registerTaskFromFile, runTask, runTasks } from './cogs/manager';
 import { task, pipeTask, sequence, parallel, pipeline } from './cogs/builder';
 
 /**
@@ -34,4 +35,4 @@ runTask('default');
 /**
  * Exports the core task building and management functions, making them available for use in other modules.
  */
-export { task, pipeTask, sequence, parallel, pipeline, runTask, runTasks, runSequence, registerTask };
+export { createWatcher, task, pipeTask, sequence, parallel, pipeline, runTask, runTasks, registerTask };

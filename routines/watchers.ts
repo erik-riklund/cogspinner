@@ -1,19 +1,29 @@
-import { watch } from 'fs';
+import { createWatcher } from '#gear:routines';
 import { task, runTask } from '#gear:routines';
 
 /**
  * ?
  */
 export default task(
-  async () =>
+  async (context) =>
   {
     /**
      * ?
      */
-    watch(`${ process.cwd() }/workshop/routes`, { recursive: true },
-      (event, file) =>
+    createWatcher(
       {
-        if (event === 'rename' && file?.endsWith('.ts')) runTask('router-manifest');
+        folder: `${ process.cwd() }/workshop/routes`,
+        callback: (event, file) => (event === 'rename' && file?.endsWith('.ts')) && runTask('router-manifest')
+      }
+    );
+
+    /**
+     * ?
+     */
+    createWatcher(
+      {
+        folder: `${ process.cwd() }/workshop/templates`,
+        callback: (_, file) => (file?.endsWith('.cog')) && runTask('transform-template', { file })
       }
     );
   }

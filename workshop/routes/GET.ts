@@ -8,6 +8,6 @@ export default route(
     /**
      * ?
      */
-    handler: async (context) => context.html('<h1>hello world</h1>')
+    handler: async (context) => context.render('landing')
   }
 );

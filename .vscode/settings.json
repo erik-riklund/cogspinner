@@ -1,7 +1,6 @@
 {
   "files.associations": {
-    "*.njk": "html",
-    "*.sly": "html"
+    "*.cog": "html"
   },
   "files.exclude": {
     "**/node_modules": true,

@@ -99,7 +99,7 @@ export function pipeline<TContext extends object = object> (name: string, tasks:
           if (currentTaskIndex < workloads.length)
           {
             const currentTask = workloads[currentTaskIndex++];
-            return currentTask(context, next);
+            return typeof currentTask === 'function' ? currentTask(context, next) : Promise.resolve();
           }
         }
 

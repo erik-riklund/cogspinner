@@ -1,5 +1,3 @@
-import { createHash } from 'crypto';
-import { sequence, parallel, pipeline } from './builder';
 import type { TaskFunction } from '#type:routines';
 
 /**
@@ -15,12 +13,17 @@ const tasks = new Map<string, Function>();
  * @param name The name of the task to execute.
  * @param context The context object to pass to the task function. Defaults to an empty object.
  * @returns A promise that resolves when the task execution is complete.
- * @throws Error if the task with the given name does not exist.
  */
 export function runTask<TContext extends object = object>
   (name: string, context: TContext = {} as TContext): Promise<void>
 {
-  return getTask(name)(context);
+  const task = getTask(name);
+  if (typeof task === 'function') return task(context);
+
+  if (tasks.has(name))
+    console.warn(`The task "${ name }" does not export a function.`);
+
+  return Promise.resolve();
 }
 
 /**
@@ -38,28 +41,18 @@ export function runTasks (tasks: string[]): Promise<void>[]
 }
 
 /**
- * ?
- */
-export function runSequence (tasks: string[]): void
-{
-  const identifier = createHash('md5').update(tasks.join(',')).digest('hex');
-  sequence(identifier, tasks); runTask(identifier, {});
-}
-
-/**
  * Retrieves a registered task by its name.
  *
  * @typeparam `T` The expected type of the task function, defaulting to TaskFunction.
  * @param name The name of the task to retrieve.
  * @returns The task function.
- * @throws Error if the task with the given name does not exist.
  */
-export function getTask<T extends Function = TaskFunction> (name: string): T
+export function getTask<T extends Function = TaskFunction> (name: string): T | void
 {
-  if (!tasks.has(name))
-    throw new Error(`Task "${ name }" does not exist.`);
+  if (tasks.has(name))
+    return tasks.get(name) as T;
 
-  return tasks.get(name) as T;
+  console.error(`The task "${ name }" does not exist.`);
 }
 
 /**
@@ -72,6 +65,7 @@ export function getTask<T extends Function = TaskFunction> (name: string): T
 export function registerTask<T extends Function = TaskFunction> (name: string, workload: T): void
 {
   if (!tasks.has(name)) tasks.set(name, workload);
+  else console.warn(`The task "${ name }" already exists.`);
 }
 
 /**
