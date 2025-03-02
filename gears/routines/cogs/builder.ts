@@ -104,7 +104,6 @@ export function pipeline<TContext extends object = object> (name: string, tasks:
         }
 
         await next();
-        console.log('exit pipeline.');
       }
     )
   );
