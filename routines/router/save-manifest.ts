@@ -1,11 +1,11 @@
-import { task } from '#gear:routines';
+import { createTask } from '#gear:routines';
 import type { RouteManifestContext } from './context';
 
 /**
  * This task takes the `RouteManifestContext`, including the generated imports and route definitions,
  * and constructs a TypeScript file (`artifacts/routes.ts`) that exports an array of route modules.
  */
-export default task<RouteManifestContext>(
+export default createTask<RouteManifestContext>(
   async (context) =>
   {
     const output = [

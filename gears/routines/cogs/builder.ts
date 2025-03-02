@@ -9,7 +9,7 @@ import type { TaskFunction, PipelineTaskFunction } from '#type:routines';
  * @param workload The task function to be executed.
  * @returns The provided task function.
  */
-export function task<TContext extends object = object>
+export function createTask<TContext extends object = object>
   (workload: TaskFunction<TContext>): TaskFunction<TContext>
 {
   return workload;
@@ -23,7 +23,7 @@ export function task<TContext extends object = object>
  * @param workload The pipeline task function to be executed.
  * @returns The provided pipeline task function.
  */
-export function pipeTask<TContext extends object = object>
+export function createPipelineTask<TContext extends object = object>
   (workload: PipelineTaskFunction<TContext>): PipelineTaskFunction<TContext>
 {
   return workload;
@@ -37,11 +37,11 @@ export function pipeTask<TContext extends object = object>
  * @param name The name of the sequence task.
  * @param tasks An array of task names to be executed in sequence.
  */
-export function sequence<TContext extends object = object> (name: string, tasks: string[]): void
+export function createSequence<TContext extends object = object> (name: string, tasks: string[]): void
 {
   registerTask(
     name,
-    task<TContext>(
+    createTask<TContext>(
       async (context) =>
       {
         for (const task of tasks)
@@ -59,11 +59,11 @@ export function sequence<TContext extends object = object> (name: string, tasks:
  * @param name The name of the parallel task.
  * @param tasks An array of task names to be executed in parallel.
  */
-export function parallel<TContext extends object = object> (name: string, tasks: string[]): void
+export function createParallel<TContext extends object = object> (name: string, tasks: string[]): void
 {
   registerTask(
     name,
-    task<TContext>(
+    createTask<TContext>(
       async (context) =>
       {
         await Promise.allSettled(
@@ -82,11 +82,11 @@ export function parallel<TContext extends object = object> (name: string, tasks:
  * @param name The name of the pipeline task.
  * @param tasks An array of task names to be executed in the pipeline.
  */
-export function pipeline<TContext extends object = object> (name: string, tasks: string[]): void
+export function createPipeline<TContext extends object = object> (name: string, tasks: string[]): void
 {
   registerTask(
     name,
-    task<TContext>(
+    createTask<TContext>(
       async (context) =>
       {
         let currentTaskIndex = 0;

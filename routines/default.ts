@@ -1,29 +1,25 @@
-import { task, sequence, parallel, runTask } from '#gear:routines';
+import { createTask, runTask } from '#gear:routines';
 
 /**
  * ?
  */
-export default task(
+export default createTask(
   async () =>
   {
     /**
      * ?
      */
-    sequence('router-manifest', [
-      'router/find-route-files',
-      'router/prepare-route-list',
-      'router/save-manifest'
-    ]);
+    // await runTask('cleanup/empty-folder', { folder: 'artifacts' });
 
     /**
      * ?
      */
-    runTask('router-manifest');
+    runTask('router/create-manifest');
 
     /**
      * ?
      */
-
+    runTask('templates/transform-all');
 
     /**
      * ?

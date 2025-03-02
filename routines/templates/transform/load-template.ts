@@ -1,0 +1,27 @@
+import { createTask } from '#gear:routines';
+import type { TemplateTransformContext } from '../context';
+
+/**
+ * ?
+ */
+export default createTask<TemplateTransformContext>(
+  async (context) =>
+  {
+    /**
+     * ?
+     */
+    const reader = Bun.file(
+      `${ process.cwd() }/workshop/templates/${ context.file }`
+    );
+    const [styles, markup] = (await reader.text()).split(/---\r?\n/);
+
+    /**
+     * ?
+     */
+    context.content =
+    {
+      styles: (styles && markup) ? styles.trim() : null,
+      markup: ((styles && markup) ? markup : styles).trim().split(/\r?\n/)
+    };
+  }
+);

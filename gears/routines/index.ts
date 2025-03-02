@@ -1,9 +1,8 @@
 import { Glob } from 'bun';
-import { watch } from 'fs';
 
 import { createWatcher } from './cogs/watcher';
 import { registerTask, registerTaskFromFile, runTask, runTasks } from './cogs/manager';
-import { task, pipeTask, sequence, parallel, pipeline } from './cogs/builder';
+import { createTask, createPipelineTask, createSequence, createParallel, createPipeline } from './cogs/builder';
 
 /**
  * Dynamically loads and registers tasks from TypeScript files within the 'routines' directory.
@@ -20,10 +19,12 @@ for await (const file of files.scan(`${ process.cwd() }/routines`))
  * new or renamed TypeScript task files. This ensures that task definitions are updated in real-time as
  * files are added, removed, or renamed.
  */
-watch(
-  `${ process.cwd() }/routines`, { recursive: true },
-  (event, path) => event === 'rename' &&
-    (path as string).endsWith('.ts') && registerTaskFromFile(path as string)
+createWatcher(
+  {
+    folder: `${ process.cwd() }/routines`,
+    callback: (event, path) => event === 'rename' &&
+      (path as string).endsWith('.ts') && registerTaskFromFile(path as string)
+  }
 );
 
 /**
@@ -35,4 +36,15 @@ runTask('default');
 /**
  * Exports the core task building and management functions, making them available for use in other modules.
  */
-export { createWatcher, task, pipeTask, sequence, parallel, pipeline, runTask, runTasks, registerTask };
+export
+{
+  createParallel,
+  createPipeline,
+  createPipelineTask,
+  createSequence,
+  createTask,
+  createWatcher,
+  registerTask,
+  runTask,
+  runTasks
+};

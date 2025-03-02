@@ -1,5 +1,5 @@
 import { Glob } from 'bun';
-import { task } from '#gear:routines';
+import { createTask } from '#gear:routines';
 
 import type { RouteManifestContext } from './context';
 
@@ -11,7 +11,7 @@ import type { RouteManifestContext } from './context';
  * The task then populates an array within a provided context object with the file paths of these
  * identified route handler files, normalizing the paths to use forward slashes for consistency.
  */
-export default task<RouteManifestContext>(
+export default createTask<RouteManifestContext>(
   async (context) =>
   {
     context.files = [];

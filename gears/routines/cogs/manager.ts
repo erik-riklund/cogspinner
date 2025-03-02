@@ -77,9 +77,12 @@ export function registerTask<T extends Function = TaskFunction> (name: string, w
 export async function registerTaskFromFile (path: string): Promise<void>
 {
   const workload = await loadTaskFromFile(`${ process.cwd() }/routines/${ path }`);
-  const identifier = createTaskIdentifier(path);
 
-  registerTask(identifier, workload);
+  if (typeof workload === 'function')
+  {
+    const identifier = createTaskIdentifier(path);
+    registerTask(identifier, workload);
+  }
 }
 
 /**

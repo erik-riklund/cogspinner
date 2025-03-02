@@ -4,11 +4,11 @@
     "prefix": "task",
     "description": "Boilerplate for a basic task.",
     "body": [
-      "import { task } from '#gear:routines';\n",
+      "import { createTask } from '#gear:routines';\n",
       "/**",
       " * ?",
       " */",
-      "export default task(",
+      "export default createTask(",
       "  async (context) =>",
       "  {",
       "",

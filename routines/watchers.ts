@@ -1,10 +1,10 @@
 import { createWatcher } from '#gear:routines';
-import { task, runTask } from '#gear:routines';
+import { createTask, runTask } from '#gear:routines';
 
 /**
  * ?
  */
-export default task(
+export default createTask(
   async (context) =>
   {
     /**
@@ -13,7 +13,7 @@ export default task(
     createWatcher(
       {
         folder: `${ process.cwd() }/workshop/routes`,
-        callback: (event, file) => (event === 'rename' && file?.endsWith('.ts')) && runTask('router-manifest')
+        callback: (event, file) => file?.endsWith('.ts') && runTask('router/create-manifest')
       }
     );
 
@@ -23,7 +23,9 @@ export default task(
     createWatcher(
       {
         folder: `${ process.cwd() }/workshop/templates`,
-        callback: (_, file) => (file?.endsWith('.cog')) && runTask('transform-template', { file })
+        callback: (_, file) => (file?.endsWith('.cog')) && runTask(
+          'templates/transform-one', { file: file.replaceAll('\\', '/') }
+        )
       }
     );
   }

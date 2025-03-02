@@ -1,12 +1,7 @@
-<!DOCTYPE html>
+h1.test
+  color: black
+  &:hover
+    color: red
 
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Cogspinner</title>
-  </head>
-
-  <body>
-    <h1>Hello world</h1>
-  </body>
-</html>
+---
+<h1 class="test">hello world</h1>
