@@ -1,60 +1,48 @@
 import type { MiddlewareHandler } from 'hono';
 
 /**
- * Configuration options for the server.
+ * Defines the configuration options for the server.
  */
-interface ServerOptions
+export interface ServerOptions
 {
   /**
-   * The port number on which the server will listen.
+   * The port number on which the server should listen.
    *
-   * @default 81 (or a default provided by the environment)
+   * If not provided, the server will attempt to use the `PORT` environment variable.
+   * If that is also not set, the port `81` will be used by default.
    */
   port?: number;
 }
 
 /**
- * Defines middleware to be applied to the server.
+ * Defines the structure for server middleware.
+ *
+ * Middleware allows you to intercept and modify incoming requests and outgoing responses.
+ * This interface specifies the properties required to define a middleware function.
+ * 
+ * @see https://hono.dev/docs/guides/middleware
  */
-interface ServerMiddleware
+export interface ServerMiddleware
 {
   /**
-   * The route to which this middleware applies.
+   * The route pattern to which the middleware should be applied.
    *
-   * - Use a specific path (e.g., `/api/users`) for targeted middleware.
-   * - Use a glob pattern (e.g., `/api/*`) for wildcard middleware that should apply to all sub-paths.
-   * - Use `*` or omit for middleware that applies to all routes.
-   *
-   * @default * (all routes)
+   * - If not provided, the middleware will be applied to all routes by default.
    */
   route?: string;
 
   /**
-   * The HTTP method for which this middleware is applicable.
-   *
-   * - Use specific methods (e.g., `POST`, `PUT`) for method-specific middleware.
-   * - Use `*` for middleware that applies to all methods.
-   *
-   * @default GET
+   * The HTTP method to which the middleware should be applied.
+
+   * - If not provided, the middleware will be applied to all requests by default.
    */
   method?: string;
 
   /**
-   * The middleware handler function that will be executed for matching routes and methods.
+   * The middleware handler function.
    *
-   * @param {Context} c - The Hono context object, providing request and response capabilities.
-   * @param {Next} next - The next middleware function in the chain. Call this to proceed.
-   * @returns {Promise<Response | void>} A promise that resolves to a `Response` object or `void`.
-   *
-   * @example
-   * ```typescript
-   * const myMiddleware: MiddlewareHandler = async (c, next) => {
-   *   console.log('Middleware executed');
-   *   await next();
-   * };
-   * ```
+   * This function will be executed when a request matches the specified route and method.
+   * It receives the Hono context and a `next` function to pass control to the next middleware.
    */
   handler: MiddlewareHandler;
 }
-
-export type { ServerOptions, ServerMiddleware };

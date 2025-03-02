@@ -1,3 +1,5 @@
+import { createHash } from 'crypto';
+import { sequence, parallel, pipeline } from './builder';
 import type { TaskFunction } from '#type:routines';
 
 /**
@@ -33,6 +35,15 @@ export function runTasks (tasks: string[]): Promise<void>[]
   tasks.forEach(task => promises.push(runTask(task)));
 
   return promises;
+}
+
+/**
+ * ?
+ */
+export function runSequence (tasks: string[]): void
+{
+  const identifier = createHash('md5').update(tasks.join(',')).digest('hex');
+  sequence(identifier, tasks); runTask(identifier, {});
 }
 
 /**
