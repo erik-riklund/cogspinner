@@ -5,7 +5,9 @@
   "type": "module",
   "devDependencies": {
     "@types/bun": "latest",
-    "concurrently": "^9.1.2"
+    "concurrently": "^9.1.2",
+    "rimraf": "^6.0.1",
+    "wait-on": "^8.0.2"
   },
   "peerDependencies": {
     "typescript": "^5"
@@ -14,8 +16,9 @@
     "hono": "^4.7.2"
   },
   "scripts": {
-    "dev": "conc \"bun dev:app\" \"bun dev:tasks\" --names \"app,tasks\" --prefix-colors \"cyan,yellow\"",
-    "dev:app": "bun --no-clear-screen --watch main.ts",
-    "dev:tasks": "bun --no-clear-screen --watch gears/routines/index.ts -d"
+    "dev": "bun dev:cleanup && conc \"bun dev:app\" \"bun dev:tasks\" --names \"app,tasks\" --prefix-colors \"cyan,yellow\"",
+    "dev:app": "wait-on artifacts/routes.ts && bun --no-clear-screen --hot main.ts",
+    "dev:cleanup": "rimraf --glob \"artifacts/*\"",
+    "dev:tasks": "bun --no-clear-screen --hot gears/routines/index.ts -d"
   }
 }

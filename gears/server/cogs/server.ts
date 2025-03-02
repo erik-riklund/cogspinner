@@ -23,16 +23,12 @@ export function createServer (
      * The port number is determined by the `options.port` property, falling back to the `PORT`
      * environment variable, and finally defaulting to `81` if neither is provided.
      *
-     * @returns {Promise<{ fetch: (request: Request, env?: any, ctx?: any) => Promise<Response>, port: number }>} -
-     * A promise that resolves to an object containing the server's `fetch` function and port number.
+     * @returns A promise that resolves to an object containing the server's `fetch` function and port number.
      */
     start: async function ()
     {
       const server = new Hono();
-
-      await initializeRouter(
-        server, middlewares, `${ process.cwd() }/workshop/routes`
-      );
+      initializeRouter(server, middlewares);
 
       return {
         fetch: server.fetch,

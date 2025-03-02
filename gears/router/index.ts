@@ -1,19 +1,8 @@
 import { route } from './cogs/helpers';
-import { routeModules } from '#artifact:routes';
-
-import type { Hono } from 'hono';
-import type { ServerMiddleware } from '#type:server';
+import { initializeRouter } from './cogs/initializer';
 
 /**
- * ?
+ * Re-exports the `route` and `initializeRouter` functions to create a more
+ * convenient and organized API for other parts of the application.
  */
-export async function initializeRouter (server: Hono,
-  middlewares: ServerMiddleware[], routesFolder: string): Promise<void>
-{
-  //+ implement mounting of registered middlewares and routes.
-}
-
-/**
- * ?
- */
-export { route };
+export { route, initializeRouter };

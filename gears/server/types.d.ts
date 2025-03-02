@@ -27,14 +27,14 @@ export interface ServerMiddleware
   /**
    * The route pattern to which the middleware should be applied.
    *
-   * If not provided, the middleware will be applied to all routes (`*`).
+   * - If not provided, the middleware will be applied to all routes by default.
    */
   route?: string;
 
   /**
    * The HTTP method to which the middleware should be applied.
-   *
-   * If not provided, the middleware will be applied to `GET` requests by default.
+
+   * - If not provided, the middleware will be applied to all requests by default.
    */
   method?: string;
 
