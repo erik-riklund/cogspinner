@@ -17,8 +17,8 @@
   },
   "scripts": {
     "dev": "bun dev:cleanup && conc \"bun dev:app\" \"bun dev:tasks\" --names \"app,tasks\" --prefix-colors \"cyan,yellow\"",
-    "dev:app": "wait-on artifacts/routes.ts && bun --no-clear-screen --hot main.ts",
+    "dev:app": "wait-on artifacts/routes.ts && bun --no-clear-screen --watch main.ts",
     "dev:cleanup": "rimraf --glob \"artifacts/*\"",
-    "dev:tasks": "bun --no-clear-screen --hot gears/routines/index.ts -d"
+    "dev:tasks": "bun --no-clear-screen --watch gears/routines/index.ts -d"
   }
 }
