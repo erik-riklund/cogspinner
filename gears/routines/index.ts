@@ -2,7 +2,7 @@ import { Glob } from 'bun';
 
 import { createWatcher } from './cogs/watcher';
 import { registerTask, registerTaskFromFile, runTask, runTasks } from './cogs/manager';
-import { createTask, createPipelineTask, createSequence, createParallel, createPipeline } from './cogs/builder';
+import { createTask, createDynamicTask, createSequence, createParallel, createDynamicFlow } from './cogs/builder';
 
 /**
  * Dynamically loads and registers tasks from TypeScript files within the 'routines' directory.
@@ -38,9 +38,9 @@ runTask('default');
  */
 export
 {
+  createDynamicFlow,
+  createDynamicTask,
   createParallel,
-  createPipeline,
-  createPipelineTask,
   createSequence,
   createTask,
   createWatcher,

@@ -4,4 +4,9 @@ h1.test
     color: red
 
 ---
-<h1 class="test">hello world</h1>
+parent: layouts/global
+
+hej:
+  - alpha: 1
+    what: true
+  - beta

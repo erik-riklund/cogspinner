@@ -15,6 +15,7 @@
     "strict": true,
     "skipLibCheck": false,
     "noFallthroughCasesInSwitch": true,
+    "useUnknownInCatchVariables": false,
 
     "noImplicitAny": true,
     "noImplicitThis": true,

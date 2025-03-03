@@ -1,5 +1,3 @@
-import type { Stylesheet } from 'css';
-
 /**
  * ?
  */
@@ -13,18 +11,17 @@ export interface TemplateTransformContext
   /**
    * ?
    */
-  content:
-  {
-    /**
-     * ?
-     */
-    styles: string | null;
+  styles: string | null;
 
-    /**
-     * ?
-     */
-    markup: string[];
-  };
+  /**
+   * ?
+   */
+  structure: string;
+
+  /**
+   * ?
+   */
+  document: any;
 
   /**
    * ?

@@ -18,10 +18,7 @@ export default createTask<TemplateTransformContext>(
     /**
      * ?
      */
-    context.content =
-    {
-      styles: (styles && markup) ? styles.trim() : null,
-      markup: ((styles && markup) ? markup : styles).trim().split(/\r?\n/)
-    };
+    context.styles = (styles && markup) ? styles.trim() : null;
+    context.structure = (styles && markup) ? markup : styles.trim();
   }
 );

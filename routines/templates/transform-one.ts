@@ -40,6 +40,6 @@ createSequence(
 createSequence(
   'templates/transform/handle-markup',
   [
-    'templates/transform/markup/parse-lines'
+    'templates/transform/markup/parse'
   ]
 );

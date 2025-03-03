@@ -23,7 +23,7 @@ export function createTask<TContext extends object = object>
  * @param workload The pipeline task function to be executed.
  * @returns The provided pipeline task function.
  */
-export function createPipelineTask<TContext extends object = object>
+export function createDynamicTask<TContext extends object = object>
   (workload: PipelineTaskFunction<TContext>): PipelineTaskFunction<TContext>
 {
   return workload;
@@ -75,14 +75,15 @@ export function createParallel<TContext extends object = object> (name: string, 
 }
 
 /**
- * Registers a task that executes a pipeline of tasks. The function creates a task that executes the provided
- * list of task names as a pipeline, where each task calls the `next` function to proceed to the next task.
+ * Creates a task that executes the provided list of task names as a dynamic flow, where each task calls 
+ * the `next` function to proceed to the next task. Code that comes after `await next()` will be executed 
+ * once the flow returns to the current task.
  *
  * @typeparam `TContext` The type of the context object, defaulting to a generic object.
  * @param name The name of the pipeline task.
  * @param tasks An array of task names to be executed in the pipeline.
  */
-export function createPipeline<TContext extends object = object> (name: string, tasks: string[]): void
+export function createDynamicFlow<TContext extends object = object> (name: string, tasks: string[]): void
 {
   registerTask(
     name,
