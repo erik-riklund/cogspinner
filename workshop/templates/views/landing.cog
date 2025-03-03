@@ -4,7 +4,4 @@ h1.test
     color: red
 
 ---
-<main>
-  <h1 class="test">Hello world</h1>
-  <cog-component />
-</main>
+<h1 class="test">Hello world</h1>

@@ -5,11 +5,8 @@
   "type": "module",
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/html-parser": "^0.11.5",
-    "@types/js-yaml": "^4.0.9",
     "@types/stylus": "^0.48.43",
     "concurrently": "^9.1.2",
-    "html-parser": "^0.11.0",
     "rimraf": "^6.0.1",
     "stylus": "^0.64.0",
     "wait-on": "^8.0.2"
@@ -18,8 +15,7 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "hono": "^4.7.2",
-    "jsdom": "^26.0.0"
+    "hono": "^4.7.2"
   },
   "scripts": {
     "dev": "conc \"bun dev:app\" \"bun dev:tasks\" --names \"app,tasks\" --prefix-colors \"cyan,yellow\"",

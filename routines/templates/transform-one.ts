@@ -40,6 +40,7 @@ createSequence(
 createSequence(
   'templates/transform/handle-markup',
   [
-    'templates/transform/markup/parse'
+    'templates/transform/markup/create-nodes',
+    'templates/transform/markup/process-tree'
   ]
 );

@@ -1,6 +1,22 @@
 /**
  * ?
  */
+export interface Node
+{
+  /**
+   * ?
+   */
+  element: string;
+
+  /**
+   * ?
+   */
+  children: Node[];
+}
+
+/**
+ * ?
+ */
 export interface TemplateTransformContext
 {
   /**
@@ -16,15 +32,36 @@ export interface TemplateTransformContext
   /**
    * ?
    */
-  content: string;
+  content: string[];
 
   /**
    * ?
    */
-  document: any;
+  tree: Node[];
+
+  /**
+   * ?
+   */
+  output: string[];
 
   /**
    * ?
    */
   result: string;
+}
+
+/**
+ * ?
+ */
+export interface ElementParserContext
+{
+  /**
+   * ?
+   */
+  element: string;
+
+  /**
+   * ?
+   */
+  output: string[];
 }
