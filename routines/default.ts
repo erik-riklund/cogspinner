@@ -9,11 +9,6 @@ export default createTask(
     /**
      * ?
      */
-    // await runTask('cleanup/empty-folder', { folder: 'artifacts' });
-
-    /**
-     * ?
-     */
     runTask('router/create-manifest');
 
     /**
