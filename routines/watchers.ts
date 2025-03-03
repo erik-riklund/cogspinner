@@ -39,7 +39,7 @@ export default createTask(
       {
         folder: `${ folders.artifacts }/templates`,
 
-        callback: (_, file) => { console.log('triggered by', file); }
+        callback: (_, file) => runTask('templates/create-manifest')
       }
     );
   }
