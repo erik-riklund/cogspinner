@@ -1,3 +1,4 @@
+import { existsSync, statSync } from 'fs';
 import type { TaskFunction } from '#type:routines';
 
 /**
@@ -102,7 +103,20 @@ function createTaskIdentifier (path: string): string
  * @param path The absolute file path.
  * @returns A promise that resolves with the loaded task function.
  */
-async function loadTaskFromFile (path: string): Promise<Function>
+async function loadTaskFromFile (path: string): Promise<Function | void>
 {
-  return (await import(path)).default;
+  if (existsSync(path))
+  {
+    try
+    {
+      //? to avoid stupid errors, we check if the file is larger than 128 bytes,
+      //? which is the size of the code output by the `task` snippet.
+
+      if (statSync(path).size >= 128) return (await import(path)).default;
+    }
+    catch (error)
+    {
+      console.error(`Failed to load task from "${ path }". Try restarting the task service.`);
+    }
+  }
 }

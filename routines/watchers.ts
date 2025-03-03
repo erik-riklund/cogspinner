@@ -31,5 +31,16 @@ export default createTask(
           runTask('templates/transform/check-source', { file: file.replaceAll('\\', '/') })
       }
     );
+
+    /**
+     * ?
+     */
+    createWatcher(
+      {
+        folder: `${ folders.artifacts }/templates`,
+
+        callback: (_, file) => { console.log('triggered by', file); }
+      }
+    );
   }
 );

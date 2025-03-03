@@ -2,6 +2,7 @@ import { Glob } from 'bun';
 import { existsSync, statSync } from 'fs';
 import { createTask, runTask } from '#gear:routines';
 import { getTemplateId } from '#gear:templates';
+import { isDevelopment } from '~constants';
 
 /**
  * ?
@@ -15,13 +16,16 @@ export default createTask(
 
     for await (const file of new Glob('**/*.cog').scan(sourceFolder))
     {
-      const modified = { source: 0, target: 0 };
-      const templateId = getTemplateId(file.replace('\\', '/'));
+      const modified = { source: 1, target: 0 };
 
-      modified.source = statSync(`${ sourceFolder }/${ file }`).mtimeMs;
+      if (!isDevelopment)
+      {
+        const templateId = getTemplateId(file.replace('\\', '/'));
+        modified.source = statSync(`${ sourceFolder }/${ file }`).mtimeMs;
 
-      if (existsSync(`${ targetFolder }/${ templateId }.ts`))
-        modified.target = statSync(`${ targetFolder }/${ templateId }.ts`).mtimeMs;
+        if (existsSync(`${ targetFolder }/${ templateId }.ts`))
+          modified.target = statSync(`${ targetFolder }/${ templateId }.ts`).mtimeMs;
+      }
 
       if (modified.source > modified.target)
         transforms.push(runTask(
@@ -31,6 +35,6 @@ export default createTask(
 
     await Promise.allSettled(transforms);
 
-    //+ run the manifest generation task.
+    if (transforms.length > 0) runTask('templates/create-manifest');
   }
 );

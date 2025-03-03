@@ -1,3 +1,4 @@
+import { isDevelopment } from '~constants';
 import { createTask, runTask } from '#gear:routines';
 
 /**
@@ -9,16 +10,16 @@ export default createTask(
     /**
      * ?
      */
-    runTask('router/create-manifest');
+    await runTask('router/create-manifest');
 
     /**
      * ?
      */
-    runTask('templates/transform-many');
+    await runTask('templates/transform-many');
 
     /**
      * ?
      */
-    if (process.argv.includes('-d')) runTask('watchers');
+    if (isDevelopment) runTask('watchers');
   }
 );

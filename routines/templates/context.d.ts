@@ -22,6 +22,11 @@ export interface TemplateTransformContext
   /**
    * ?
    */
+  id: string;
+
+  /**
+   * ?
+   */
   file: string;
 
   /**
@@ -64,4 +69,12 @@ export interface ElementParserContext
    * ?
    */
   output: string[];
+}
+
+/**
+ * ?
+ */
+export interface CreateManifestContext
+{
+
 }

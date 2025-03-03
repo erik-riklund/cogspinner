@@ -1,4 +1,6 @@
 import { createTask } from '#gear:routines';
+import { getTemplateId } from '#gear:templates';
+
 import type { TemplateTransformContext } from '../context';
 
 /**
@@ -7,6 +9,11 @@ import type { TemplateTransformContext } from '../context';
 export default createTask<TemplateTransformContext>(
   async (context) =>
   {
+    /**
+     * ?
+     */
+    context.id = getTemplateId(context.file);
+
     /**
      * ?
      */

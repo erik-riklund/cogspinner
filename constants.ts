@@ -23,3 +23,8 @@ export const folders =
    */
   templates: `${ rootFolder }/workshop/templates`
 };
+
+/**
+ * ?
+ */
+export const isDevelopment = process.argv.includes('-d');
