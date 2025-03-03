@@ -14,7 +14,7 @@ export default createTask(
     /**
      * ?
      */
-    runTask('templates/transform-all');
+    runTask('templates/transform-many');
 
     /**
      * ?

@@ -39,16 +39,19 @@ type WatcherCallback = (event: string, filename: string) => void;
  */
 export function createWatcher (options: WatcherOptions): void
 {
+  const debounceTimeouts: Record<string, any> = {};
   const recursive = options.recursive !== false;
 
-  let debounceTimeout: any;
   watch(options.folder, { recursive },
     (event, filename) =>
     {
-      clearTimeout(debounceTimeout);
-      debounceTimeout = setTimeout(
-        () => { options.callback(event, filename as string); }, options.debounce || 50
-      );
+      if (filename !== null)
+      {
+        clearTimeout(debounceTimeouts[filename]);
+        debounceTimeouts[filename] = setTimeout(
+          () => { options.callback(event, filename as string); }, options.debounce || 50
+        );
+      }
     }
   );
 }
