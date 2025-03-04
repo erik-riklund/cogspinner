@@ -1,7 +1,7 @@
 import { Glob } from 'bun';
 
 import { createWatcher } from './cogs/watcher';
-import { registerTask, registerTaskFromFile, runTask, runTasks } from './cogs/manager';
+import { registerTask, registerTaskFromFile, runTask, runTasks, taskExists } from './cogs/manager';
 import { createTask, createDynamicTask, createSequence, createParallel, createDynamicFlow } from './cogs/builder';
 
 /**
@@ -46,5 +46,6 @@ export
   createWatcher,
   registerTask,
   runTask,
-  runTasks
+  runTasks,
+  taskExists
 };

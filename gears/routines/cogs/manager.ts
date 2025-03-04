@@ -57,6 +57,17 @@ export function getTask<T extends Function = TaskFunction> (name: string): T | v
 }
 
 /**
+ * Checks if a task with the given name is registered.
+ *
+ * @param name The name of the task to check.
+ * @returns `true` if the task exists, otherwise `false`.
+ */
+export function taskExists (name: string): boolean
+{
+  return tasks.has(name);
+}
+
+/**
  * Registers a task with a given name and workload.
  *
  * @typeparam `T` The type of the workload function, defaulting to `TaskFunction`.

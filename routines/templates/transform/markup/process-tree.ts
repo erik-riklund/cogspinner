@@ -36,7 +36,7 @@ async function processNode (node: Node, output: string[]): Promise<void>
   }
   else
   {
-    output.push(`'${ element.replaceAll(/([`'])/g, '\\$1') }',`);
+    output.push(`'${ element.replaceAll(/(['])/g, '\\$1') }',`);
   }
 
   for (const child of children) await processNode(child, output);

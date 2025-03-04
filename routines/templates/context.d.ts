@@ -76,5 +76,8 @@ export interface ElementParserContext
  */
 export interface CreateManifestContext
 {
-
+  /**
+   * ?
+   */
+  templates: { id: string, name: string; }[];
 }

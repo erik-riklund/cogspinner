@@ -1,9 +1,9 @@
-import type { MiddlewareHandler } from 'hono';
+import type { Context, Next } from 'hono';
 
 /**
  * ?
  */
-export const viewRenderer: MiddlewareHandler = async (context, next) =>
+export async function viewRenderer (context: Context, next: Next): Promise<void>
 {
   context.setRenderer(
     (content) =>
