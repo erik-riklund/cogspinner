@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { initializeRouter } from '#gear:router';
+import { viewRenderer } from '#gear:templates';
 
-import type { MiddlewareHandler } from 'hono';
 import type { ServerOptions, ServerMiddleware } from '#type:server';
 
 /**
@@ -12,8 +12,7 @@ import type { ServerOptions, ServerMiddleware } from '#type:server';
  * @param {ServerMiddleware[]} [middlewares=[]] - Optional array of middleware to apply to all routes.
  * @returns {object} - An object containing methods for registering middleware and starting the server.
  */
-export function createServer (options: ServerOptions = {},
-  middlewares: ServerMiddleware[] = [], renderer?: MiddlewareHandler)
+export function createServer (options: ServerOptions = {}, middlewares: ServerMiddleware[] = [])
 {
   return {
     /**
@@ -29,8 +28,10 @@ export function createServer (options: ServerOptions = {},
     start: async function ()
     {
       const server = new Hono();
-      if (renderer) server.use(renderer);
-      initializeRouter(server, middlewares);
+
+      initializeRouter(
+        server, [{ handler: viewRenderer }, ...middlewares]
+      );
 
       return {
         fetch: server.fetch,

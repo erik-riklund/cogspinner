@@ -1,4 +1,26 @@
 /**
+ * ?
+ */
+export interface RenderingContext
+{
+  /**
+   * ?
+   */
+  styles: string[];
+
+  /**
+   * ?
+   */
+  [key: string]: any;
+}
+
+/**
+ * A map-like structure that holds cached templates, where each key is a string
+ * representing the template name, and the value is a `CachedTemplate` object.
+ */
+export type TemplateCache = { [key: string]: CachedTemplate; };
+
+/**
  * Represents a cached template, which is a compiled template function that has been memoized
  * by the `loadCompiledTemplate` function. The `accessed` property is updated each time the
  * template is accessed, and is used to clear the cache of unused templates.
@@ -14,6 +36,11 @@ export interface CachedTemplate
    * The compiled template function.
    */
   template: CompiledTemplate;
+
+  /**
+   * ?
+   */
+  stylesheet: string | null;
 }
 
 /**

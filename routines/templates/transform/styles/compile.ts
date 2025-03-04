@@ -14,7 +14,8 @@ export default createTask<TemplateTransformContext>(
     if (styles !== null)
     {
       const path = `${ process.cwd() }/workshop/styles`;
-      context.styles = stylus(styles).set('include', path).render();
+
+      context.styles = stylus(styles).set('compress', true).set('include', path).render();
     }
   }
 );

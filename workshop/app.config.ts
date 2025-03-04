@@ -10,3 +10,11 @@ export const serverOptions: ServerOptions =
    */
   port: 81
 };
+
+/**
+ * ?
+ */
+export const appSettings =
+{
+
+};
