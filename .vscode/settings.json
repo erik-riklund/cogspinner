@@ -9,6 +9,7 @@
 
   "editor.wordWrap": "on",
   "editor.formatOnSave": true,
+  "editor.links": false,
 
   "better-comments.multilineComments": true,
   "better-comments.tags": [

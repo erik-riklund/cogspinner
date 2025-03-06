@@ -1,7 +1,15 @@
+@style:
+
 h1.test
   color: black
   &:hover
     color: red
 
 ---
+@head:
+
+
+---
+@template:
+
 <h1 class="test">Hello world</h1>

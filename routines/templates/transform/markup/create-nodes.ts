@@ -24,20 +24,23 @@ export default createTask<TemplateTransformContext>(
   async (context) =>
   {
     context.tree = [];
-    const stack: Stack[] = [];
 
-    for (const line of context.content)
-    {
-      if (line.trimStart().length > 0)
-      {
-        const trimmedLine = line.trim();
-        const lineLevel = getLevel(line);
-        const node: Node = { element: trimmedLine, children: [] };
 
-        popStackToParentLevel(stack, lineLevel);
-        pushNodeOntoStack(context.tree, stack, node, lineLevel);
-      }
-    }
+
+    // const stack: Stack[] = [];
+
+    // for (const line of context.content)
+    // {
+    //   if (line.trimStart().length > 0)
+    //   {
+    //     const trimmedLine = line.trim();
+    //     const lineLevel = getLevel(line);
+    //     const node: Node = { element: trimmedLine, children: [] };
+
+    //     popStackToParentLevel(stack, lineLevel);
+    //     pushNodeOntoStack(context.tree, stack, node, lineLevel);
+    //   }
+    // }
   }
 );
 

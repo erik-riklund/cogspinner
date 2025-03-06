@@ -16,8 +16,8 @@ export default createTask<TemplateTransformContext>(
   {
     context.output = [];
 
-    for (const node of context.tree)
-      await processNode(node, context.output);
+    // for (const node of context.tree)
+    //   await processNode(node, context.output);
   }
 );
 

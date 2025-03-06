@@ -12,7 +12,7 @@ type Predicate<T> = <K extends keyof T>(key: K, value: T[K]) => boolean;
  * Filters the properties of an object based on a predicate function.
  */
 export function filterObject<
-  T extends { [key: string]: any; }> (object: T, predicate: Predicate<T>): T
+  T extends Record<string, any>> (object: T, predicate: Predicate<T>): T
 {
   const result = Object.fromEntries(
     Object.entries(object).filter(([key, value]) => predicate(key, value))

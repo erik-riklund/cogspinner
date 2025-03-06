@@ -30,7 +30,8 @@ const cacheCleanupInterval = 600000; // 10 minutes in milliseconds
  * @param name The name of the template to retrieve.
  * @returns A `Promise` that resolves to the compiled template function.
  */
-export async function getCompiledTemplate (name: string): Promise<[CompiledTemplate, string | null]>
+export async function getCompiledTemplate (
+  name: string): Promise<[CompiledTemplate, string | null]>
 {
   if (!cache[name])
   {
@@ -49,7 +50,8 @@ export async function getCompiledTemplate (name: string): Promise<[CompiledTempl
  * @param name The name of the template to load.
  * @returns A `Promise` that resolves to the template function and its stylesheet, if any.
  */
-async function loadCompiledTemplate (name: string): Promise<[CompiledTemplate, string | null]>
+async function loadCompiledTemplate (
+  name: string): Promise<[CompiledTemplate, string | null]>
 {
   const templateId = getTemplateId(`${ name }.cog`);
 

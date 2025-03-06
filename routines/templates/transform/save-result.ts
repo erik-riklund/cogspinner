@@ -1,3 +1,4 @@
+import { folders } from '~constants';
 import { createTask } from '#gear:routines';
 import type { TemplateTransformContext } from '../context';
 
@@ -9,13 +10,14 @@ export default createTask<TemplateTransformContext>(
   {
     console.log(Bun.inspect(context, { colors: true })); //! debug
 
-    const outputFolder = `${ process.cwd() }/artifacts`;
-    await Bun.write(`${ outputFolder }/templates/${ context.id }.ts`, context.result);
+    await Bun.write(
+      `${ folders.artifacts }/templates/${ context.id }.ts`, context.result
+    );
 
-    if (context.styles !== null)
+    if (typeof context.style === 'string')
     {
       await Bun.write(
-        `${ outputFolder }/stylesheets/${ context.id }.css`, context.styles
+        `${ folders.artifacts }/stylesheets/${ context.id }.css`, context.style
       );
     }
   }
