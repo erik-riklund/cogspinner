@@ -23,24 +23,24 @@ export default createTask(
     /**
      * ?
      */
-    createWatcher(
-      {
-        folder: folders.templates,
+    // createWatcher(
+    //   {
+    //     folder: folders.templates,
 
-        callback: (_, file) => file.endsWith('.cog') &&
-          runTask('templates/transform/check-source', { file: file.replaceAll('\\', '/') })
-      }
-    );
+    //     callback: (_, file) => file.endsWith('.cog') &&
+    //       runTask('templates/transform/check-source', { file: file.replaceAll('\\', '/') })
+    //   }
+    // );
 
     /**
      * ?
      */
-    createWatcher(
-      {
-        folder: `${ folders.artifacts }/templates`,
+    // createWatcher(
+    //   {
+    //     folder: `${ folders.artifacts }/templates`,
 
-        callback: (_, file) => runTask('templates/create-manifest')
-      }
-    );
+    //     callback: (_, file) => runTask('templates/create-manifest')
+    //   }
+    // );
   }
 );

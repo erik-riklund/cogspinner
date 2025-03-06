@@ -1,9 +1,5 @@
-import CleanCSS from 'clean-css';
-import { useRenderContext } from './context';
-import { getCompiledTemplate } from './loader';
-
+import { appSettings } from '~workshop/app.config';
 import type { Context, Next } from 'hono';
-import type { RenderContext } from '../types';
 
 /**
  * ?
@@ -12,16 +8,7 @@ export async function viewRenderer (
   context: Context, next: Next): Promise<void>
 {
   context.setRenderer(
-    async (view) => 
-    {
-      const renderContext = useRenderContext();
-      const template = await getCompiledTemplate(`views/${ await view }`);
-      const content = await template(renderContext, {});
-
-      //+ implement cache?
-
-      return context.html(renderDocument(renderContext, content));
-    }
+    async (view) => context.html(renderDocument())
   );
   await next();
 };
@@ -29,24 +16,18 @@ export async function viewRenderer (
 /**
  * ?
  */
-function renderDocument (context: RenderContext, content: string): string
+function renderDocument (): string
 {
-  const css = new CleanCSS({ level: 2 });
-  const styles = Object.values(context.styles).join('');
-  const elements = Object.values(context.head).join('');
-
   let document = [
     '<!DOCTYPE html>',
-    `<html lang="${ context.lang }">`,
+    `<html lang="${ appSettings.lang }">`,
     '<head>',
-    `<title>${ context.title }</title>`,
-    elements,
-    '<style>',
-    css.minify(styles).styles,
-    '</style>',
+    `<meta charset="${ appSettings.charset }">`,
+    '<meta name="viewport" content="width=device-width, initial-scale=1.0">',
+    `<title>${ appSettings.title } | Work in progress</title>`,
     '</head>',
     '<body>',
-    content,
+    '<h1>Work in progress</h1>',
     '</body>',
     '</html>'
   ];

@@ -8,12 +8,4 @@ h1.test
 ---
 @template:
 
-<h1 class="test">
-  Hello world
-</h1>
-
-~ component "users/profile" { user } ~
-  <p>do something here...</p>
-  
-  ~ component "users/avatar" { image } @ avatar ~
-    <div>this should become a child of the parent</div>
+<h1 class="test">Hello world</h1>
