@@ -8,9 +8,8 @@ export default createTask<TemplateTransformContext>(
   async (context) =>
   {
     let result: string[] = [
-      '//import {traverseObject} from \'../../gears/helpers\';',
-      'import type {RenderContext} from \'../../gears/templates/types\';',
-      'export default async function (context: RenderContext, props: Record<string, any> = {}): Promise<string> {'
+      'import type {RenderContext, TemplateElement} from \'../../gears/templates/types\';',
+      'export default async function (context: RenderContext, props: Record<string, any> = {}, children: TemplateElement[] = []): Promise<string> {'
     ];
 
     if (typeof context.head === 'string')

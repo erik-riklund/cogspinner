@@ -1,4 +1,27 @@
 /**
+ * Represents the tree structure resulting from parsing a template string.
+ * It can contain strings (representing plain text and HTML) or `Element` objects
+ * (representing template directives) and their children.
+ */
+export type Tree = (string | TemplateElement)[];
+
+/**
+ * Represents a template element with a directive string and a list of child elements.
+ */
+interface TemplateElement
+{
+  /**
+   * The directive string, e.g., "~ someDirective ~".
+   */
+  directive: string;
+
+  /**
+   * An array of child elements, which can be strings or other `Element` objects.
+   */
+  children: (string | TemplateElement)[];
+}
+
+/**
  * A map-like structure that holds cached templates, where each key is a string
  * representing the template name, and the value is a `CachedTemplate` object.
  */

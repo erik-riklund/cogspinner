@@ -1,5 +1,6 @@
 import { createTask } from '#gear:routines';
 
+import type { TemplateElement, Tree } from '#type:templates';
 import type { TemplateTransformContext } from '../../context';
 
 /**
@@ -17,30 +18,7 @@ interface Stack
   /**
    * The element associated with this stack frame.
    */
-  element: Element;
-}
-
-/**
- * Represents the tree structure resulting from parsing a template string.
- * It can contain strings (representing plain text and HTML) or `Element` objects
- * (representing template directives) and their children.
- */
-export type Tree = (string | Element)[];
-
-/**
- * Represents a template element with a directive string and a list of child elements.
- */
-interface Element
-{
-  /**
-   * The directive string, e.g., "~ someDirective ~".
-   */
-  directive: string;
-
-  /**
-   * An array of child elements, which can be strings or other `Element` objects.
-   */
-  children: (string | Element)[];
+  element: TemplateElement;
 }
 
 /**
@@ -69,8 +47,8 @@ export default createTask<TemplateTransformContext>(
           popStackToParentLevel(stack, level);
 
           const element = !isTemplateDirective(line) ? line :
-            { directive: line, children: [] } satisfies Element;
-          const parent: Element | undefined = stack[stack.length - 1]?.element;
+            { directive: line, children: [] } satisfies TemplateElement;
+          const parent: TemplateElement | undefined = stack[stack.length - 1]?.element;
 
           addElementToTree(tree, parent, element);
           if (typeof element !== 'string') stack.push({ level, element });
@@ -133,7 +111,7 @@ function popStackToParentLevel (stack: Stack[], currentLevel: number): void
  * @param element - The element to add.
  */
 function addElementToTree (tree: Tree,
-  parent: Element | undefined, element: Element | string): void
+  parent: TemplateElement | undefined, element: TemplateElement | string): void
 {
   if (parent === undefined) tree.push(element); else parent.children.push(element);
 }
