@@ -6,10 +6,11 @@ h1.test
     color: red
 
 ---
-@head:
-
-
----
 @template:
 
-<h1 class="test">Hello world</h1>
+<h1 class="test">
+  Hello world
+</h1>
+
+~ component "users/profile" { user } ~
+  <p>do something here...</p>

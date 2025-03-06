@@ -8,12 +8,25 @@ export default createTask<TemplateTransformContext>(
   async (context) =>
   {
     let result: string[] = [
-      'export default function (',
-      '  context: Record<string, any>,',
-      '  props: Record<string, any> = {}): string {',
-      'return [', ...context.output, '].join("\\n");', '}'
+      '//import {traverseObject} from \'../../gears/helpers\';',
+      'import type {RenderContext} from \'../../gears/templates/types\';',
+      'export default async function (context: RenderContext, props: Record<string, any> = {}): Promise<string> {'
     ];
 
+    if (typeof context.head === 'string')
+      result.push(`context.includeElement('${ context.id }', \`${ escapeBackticks(context.head) }\`);`);
+    if (typeof context.style === 'string')
+      result.push(`context.registerStylesheet('${ context.id }', \`${ escapeBackticks(context.style) }\`);`);
+
+    result.push('return [', ...(context.output ?? []), '].join("\\n");', '}');
     context.result = result.join('\n');
   }
 );
+
+/**
+ * ?
+ */
+function escapeBackticks (input: string): string
+{
+  return input.replace(/`/g, '\\`');
+}

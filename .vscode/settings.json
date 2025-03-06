@@ -1,7 +1,7 @@
 {
-  // "files.associations": {
-  //   "*.cog": "html"
-  // },
+  "files.associations": {
+    "*.cog": "html"
+  },
   "files.exclude": {
     "**/node_modules": true,
     "**/bun.lock": true
@@ -28,6 +28,7 @@
   "css.format.spaceAroundSelectorSeparator": true,
   "css.completion.completePropertyWithSemicolon": true,
 
+  "html.format.enable": false,
   "html.format.extraLiners": "html, body",
   "html.format.indentInnerHtml": true,
   "html.format.contentUnformatted": "style, script",

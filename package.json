@@ -5,6 +5,7 @@
   "type": "module",
   "devDependencies": {
     "@types/bun": "latest",
+    "@types/clean-css": "^4.2.11",
     "@types/stylus": "^0.48.43",
     "concurrently": "^9.1.2",
     "rimraf": "^6.0.1",

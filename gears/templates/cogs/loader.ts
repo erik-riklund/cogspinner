@@ -30,17 +30,16 @@ const cacheCleanupInterval = 600000; // 10 minutes in milliseconds
  * @param name The name of the template to retrieve.
  * @returns A `Promise` that resolves to the compiled template function.
  */
-export async function getCompiledTemplate (
-  name: string): Promise<[CompiledTemplate, string | null]>
+export async function getCompiledTemplate (name: string): Promise<CompiledTemplate>
 {
   if (!cache[name])
   {
-    const [template, stylesheet] = await loadCompiledTemplate(name);
-    cache[name] = { accessed: 0, template, stylesheet };
+    const template = await loadCompiledTemplate(name);
+    cache[name] = { accessed: 0, template };
   }
 
   cache[name].accessed = Date.now();
-  return [cache[name].template, cache[name].stylesheet];
+  return cache[name].template;
 }
 
 /**
@@ -50,26 +49,13 @@ export async function getCompiledTemplate (
  * @param name The name of the template to load.
  * @returns A `Promise` that resolves to the template function and its stylesheet, if any.
  */
-async function loadCompiledTemplate (
-  name: string): Promise<[CompiledTemplate, string | null]>
+async function loadCompiledTemplate (name: string): Promise<CompiledTemplate>
 {
   const templateId = getTemplateId(`${ name }.cog`);
-
   const artifact = `${ folders.artifacts }/templates/${ templateId }.ts`;
-  const template = existsSync(artifact) ? (await import(artifact)).default
-    : (() => `The template "${ name }" does not exist.`);
+  const module = existsSync(artifact) ? await import(artifact) : null;
 
-  const stylesheet = await loadStylesheet(templateId);
-  return [template as CompiledTemplate, stylesheet];
-}
-
-/**
- * ?
- */
-async function loadStylesheet (templateId: string): Promise<string | null>
-{
-  const styles = `${ folders.artifacts }/stylesheets/${ templateId }.css`;
-  return existsSync(styles) ? await Bun.file(styles).text() : null;
+  return (module?.default ?? (() => `The template "${ name }" does not exist.`)) as CompiledTemplate;
 }
 
 /**

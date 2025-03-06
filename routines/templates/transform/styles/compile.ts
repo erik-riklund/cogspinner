@@ -5,17 +5,19 @@ import { createTask } from '#gear:routines';
 import type { TemplateTransformContext } from '../../context';
 
 /**
- * This task takes the `styles` property from the `TemplateTransformContext`,
+ * This task takes the `style` property from the `TemplateTransformContext`,
  * compiles it using Stylus, and updates the property with the resulting CSS.
  */
 export default createTask<TemplateTransformContext>(
   async (context) =>
   {
-    const { styles } = context;
+    const { style } = context;
 
-    if (styles !== null)
+    if (style !== null)
     {
-      context.styles = stylus(styles).set('include', folders.styles).render();
+      context.style = stylus(style)
+        .set('compress', true)
+        .set('include', folders.styles).render();
     }
   }
 );

@@ -1,19 +1,4 @@
-/**
- * Represents a node in the document tree structure,
- * used for representing template elements.
- */
-export interface Node
-{
-  /**
-   * The full HTML or template element (a single line).
-   */
-  element: string;
-
-  /**
-   * An array of child nodes, representing the nested elements within this node.
-   */
-  children: Node[];
-}
+import type { Tree } from './transform/markup/create-tree';
 
 /**
  * ?
@@ -48,28 +33,17 @@ export interface TemplateTransformContext
   /**
    * ?
    */
+  tree: Tree;
+
+  /**
+   * ?
+   */
   output: string[];
 
   /**
    * ?
    */
   result: string;
-}
-
-/**
- * ?
- */
-export interface ElementParserContext
-{
-  /**
-   * ?
-   */
-  element: string;
-
-  /**
-   * ?
-   */
-  output: string[];
 }
 
 /**

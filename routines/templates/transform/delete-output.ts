@@ -4,7 +4,7 @@ import { createTask } from '#gear:routines';
 /**
  * ?
  */
-export interface DeleteOutputContext
+interface DeleteOutputContext
 {
   /**
    * ?

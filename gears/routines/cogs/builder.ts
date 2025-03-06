@@ -37,15 +37,15 @@ export function createDynamicTask<TContext extends object = object>
  * @param name The name of the sequence task.
  * @param tasks An array of task names to be executed in sequence.
  */
-export function createSequence<TContext extends object = object> (name: string, tasks: string[]): void
+export function createSequence<
+  TContext extends Object = Object> (name: string, tasks: string[]): void
 {
   registerTask(
     name,
     createTask<TContext>(
       async (context) =>
       {
-        for (const task of tasks)
-          await runTask<TContext>(task, context);
+        for (const task of tasks) await runTask<TContext>(task, context);
       }
     )
   );

@@ -19,6 +19,11 @@ export const serverOptions: ServerOptions =
 export const appSettings: AppSettings =
 {
   /**
+   * ?
+   */
+  lang: 'en',
+
+  /**
    * The character set encoding of the rendered HTML (default: `utf-8`).
    */
   charset: 'utf-8',

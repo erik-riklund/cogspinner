@@ -11,7 +11,7 @@ export type TemplateCache = Record<string, CachedTemplate>;
  * @param context The context object containing data used to render the template.
  * @returns A string representing the rendered template.
  */
-export type CompiledTemplate = (context: Record<string, any>) => string;
+export type CompiledTemplate = (context: RenderContext, props: Record<string, any>) => Promise<string>;
 
 /**
  * Represents a cached template, which is a compiled template function that has been memoized
@@ -29,11 +29,6 @@ export interface CachedTemplate
    * The compiled template function.
    */
   template: CompiledTemplate;
-
-  /**
-   * ?
-   */
-  stylesheet: string | null;
 }
 
 /**
@@ -42,6 +37,11 @@ export interface CachedTemplate
  */
 export interface RenderContext
 {
+  /**
+   * ?
+   */
+  lang: string;
+
   /**
    * The title of the rendered page.
    */
@@ -54,9 +54,14 @@ export interface RenderContext
   styles: Record<string, string>;
 
   /**
-   * An array of element strings to be included in the <head> section of the rendered output.
+   * ?
    */
-  head: string[];
+  head: Record<string, string>;
+
+  /**
+   * ?
+   */
+  data: Record<string, any>;
 
   /**
    * Registers a stylesheet with the given template ID and content. This allows for dynamically
@@ -65,8 +70,7 @@ export interface RenderContext
   registerStylesheet: (id: string, stylesheet: string) => void;
 
   /**
-   * Adds a meta element with the given attributes to the meta tag array. This allows for
-   * dynamically adding meta tags during the rendering process.
+   * ?
    */
-  includeElement: (element: string) => void;
+  includeElement: (id: string, element: string) => void;
 }
