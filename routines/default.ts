@@ -15,7 +15,7 @@ export default createTask(
     /**
      * ?
      */
-    // await runTask('templates/transform-many');
+    await runTask('templates/build-views');
 
     /**
      * ?

@@ -1,4 +1,4 @@
-@style:
+@style
 
 h1.test
   color: black
@@ -6,6 +6,8 @@ h1.test
     color: red
 
 ---
-@template:
-
+@head
+<link rel="stylesheet" href="test.css" />
+---
+@template
 <h1 class="test">Hello world</h1>

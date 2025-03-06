@@ -7,8 +7,7 @@
  * @param context The context object containing shared data.
  * @returns A promise that resolves when the task is complete.
  */
-export type TaskFunction<TContext extends object = object>
-  = (context: TContext) => Promise<void>;
+export type TaskFunction<TContext extends Object = Record<string, any>> = (context: TContext) => Promise<void>;
 
 /**
  * Represents a function that performs a task within a pipeline, allowing it to control the flow.
@@ -20,5 +19,4 @@ export type TaskFunction<TContext extends object = object>
  * @param next A function that, when called, executes the next task in the pipeline.
  * @returns A promise that resolves when the task and any subsequent tasks (if `next` is called) are complete.
  */
-export type PipelineTaskFunction<TContext extends object = object>
-  = (context: TContext, next: () => Promise<void>) => Promise<void>;
+export type PipelineTaskFunction<TContext extends Object = Record<string, any>> = (context: TContext, next: () => Promise<void>) => Promise<void>;

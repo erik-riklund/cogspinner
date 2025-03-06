@@ -120,10 +120,10 @@ async function loadTaskFromFile (path: string): Promise<Function | void>
   {
     try
     {
-      //? to avoid stupid errors, we check if the file is larger than 128 bytes,
-      //? which is the size of the code output by the `task` snippet.
+      //? to avoid stupid errors, we check if the file is larger than 125 bytes,
+      //? which is roughly the size of the code output by the `task` snippet.
 
-      if (statSync(path).size >= 128) return (await import(path)).default;
+      if (statSync(path).size >= 125) return (await import(path)).default;
     }
     catch (error)
     {

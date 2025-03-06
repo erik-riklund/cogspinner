@@ -9,7 +9,7 @@ import type { TaskFunction, PipelineTaskFunction } from '#type:routines';
  * @param workload The task function to be executed.
  * @returns The provided task function.
  */
-export function createTask<TContext extends object = object>
+export function createTask<TContext extends Object = Record<string, any>>
   (workload: TaskFunction<TContext>): TaskFunction<TContext>
 {
   return workload;
@@ -23,7 +23,7 @@ export function createTask<TContext extends object = object>
  * @param workload The pipeline task function to be executed.
  * @returns The provided pipeline task function.
  */
-export function createDynamicTask<TContext extends object = object>
+export function createDynamicTask<TContext extends Object = Record<string, any>>
   (workload: PipelineTaskFunction<TContext>): PipelineTaskFunction<TContext>
 {
   return workload;
@@ -37,8 +37,7 @@ export function createDynamicTask<TContext extends object = object>
  * @param name The name of the sequence task.
  * @param tasks An array of task names to be executed in sequence.
  */
-export function createSequence<
-  TContext extends Object = Object> (name: string, tasks: string[]): void
+export function createSequence<TContext extends Object = Record<string, any>> (name: string, tasks: string[]): void
 {
   registerTask(
     name,
@@ -59,7 +58,7 @@ export function createSequence<
  * @param name The name of the parallel task.
  * @param tasks An array of task names to be executed in parallel.
  */
-export function createParallel<TContext extends object = object> (name: string, tasks: string[]): void
+export function createParallel<TContext extends Object = Record<string, any>> (name: string, tasks: string[]): void
 {
   registerTask(
     name,
@@ -83,7 +82,7 @@ export function createParallel<TContext extends object = object> (name: string, 
  * @param name The name of the pipeline task.
  * @param tasks An array of task names to be executed in the pipeline.
  */
-export function createDynamicFlow<TContext extends object = object> (name: string, tasks: string[]): void
+export function createDynamicFlow<TContext extends Object = Record<string, any>> (name: string, tasks: string[]): void
 {
   registerTask(
     name,

@@ -8,6 +8,8 @@
     "@types/clean-css": "^4.2.11",
     "@types/stylus": "^0.48.43",
     "concurrently": "^9.1.2",
+    "@types/dot": "^1.1.7",
+    "i": "^0.3.7",
     "rimraf": "^6.0.1",
     "stylus": "^0.64.0",
     "wait-on": "^8.0.2"
@@ -17,6 +19,7 @@
   },
   "dependencies": {
     "clean-css": "^5.3.3",
+    "dot": "^2.0.0-beta.1",
     "hono": "^4.7.2"
   },
   "scripts": {
