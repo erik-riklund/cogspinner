@@ -23,14 +23,14 @@ export default createTask(
     /**
      * ?
      */
-    // createWatcher(
-    //   {
-    //     folder: folders.templates,
+    createWatcher(
+      {
+        folder: folders.templates,
 
-    //     callback: (_, file) => file.endsWith('.cog') &&
-    //       runTask('templates/transform/check-source', { file: file.replaceAll('\\', '/') })
-    //   }
-    // );
+        callback: (_, file) => file.endsWith('.cog') &&
+          runTask('templates/transform-one', { file: file.replaceAll('\\', '/') })
+      }
+    );
 
     /**
      * ?

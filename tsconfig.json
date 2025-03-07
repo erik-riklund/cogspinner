@@ -27,7 +27,7 @@
     "paths": {
       "~*": [ "./*" ],
       "#artifact:*": [ "./artifacts/*" ],
-      "#gear:*": [ "./gears/*/index.ts" ],
+      "#gear:*": [ "./gears/*/index.ts", "./gears/*" ],
       "#route:*": [ "./workshop/routes/*.ts" ],
       "#tasks:*": [ "./routines/*" ],
       "#type:*": [ "./gears/*/types.d.ts" ],

@@ -22,7 +22,7 @@ export function runTask<TContext extends object = object>
   if (typeof task === 'function') return task(context);
 
   if (tasks.has(name))
-    console.warn(`The task "${ name }" does not export a function.`);
+    console.error(`The task "${ name }" does not export a function.`);
 
   return Promise.resolve();
 }
@@ -77,7 +77,7 @@ export function taskExists (name: string): boolean
 export function registerTask<T extends Function = TaskFunction> (name: string, workload: T): void
 {
   if (!tasks.has(name)) tasks.set(name, workload);
-  else console.warn(`The task "${ name }" already exists.`);
+  else console.error(`The task "${ name }" already exists.`);
 }
 
 /**

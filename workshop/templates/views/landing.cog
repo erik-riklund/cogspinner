@@ -1,13 +1,23 @@
 @style
 
 h1.test
-  color: black
+  color black
   &:hover
-    color: red
+    color red
 
 ---
 @head
-<link rel="stylesheet" href="test.css" />
+
+<style>
+body { background: yellowgreen; }
+</style>
 ---
 @template
+
 <h1 class="test">Hello world</h1>
+
+$layout|test
+  <p>Should be rendered inside the "test" layout</p>
+
+$component|hello { message: 'Hello world' }
+  <h1>This component has a title</h1>

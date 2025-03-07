@@ -8,9 +8,7 @@
     "@types/clean-css": "^4.2.11",
     "@types/stylus": "^0.48.43",
     "concurrently": "^9.1.2",
-    "@types/dot": "^1.1.7",
-    "i": "^0.3.7",
-    "rimraf": "^6.0.1",
+    "css-simple-parser": "^3.0.2",
     "stylus": "^0.64.0",
     "wait-on": "^8.0.2"
   },
@@ -18,13 +16,13 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@lit-labs/ssr": "^3.3.1",
     "clean-css": "^5.3.3",
-    "dot": "^2.0.0-beta.1",
-    "hono": "^4.7.2"
+    "hono": "^4.7.2",
+    "lit": "^3.2.1"
   },
   "scripts": {
     "dev": "conc \"bun dev:app\" \"bun dev:tasks\" --names \"app,tasks\" --prefix-colors \"cyan,yellow\"",
-    "dev:cleaner": "rimraf --glob \"artifacts/*\"",
     "dev:app": "wait-on artifacts/routes.ts && bun --watch main.ts",
     "dev:tasks": "bun --watch gears/routines/index.ts -d"
   }

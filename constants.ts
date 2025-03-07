@@ -9,6 +9,11 @@ const rootFolder = process.cwd();
 export const folders =
 {
   /**
+   * ?
+   */
+  root: process.cwd(),
+
+  /**
    * The path to the artifacts folder, where build outputs and other generated files are stored.
    */
   artifacts: `${ rootFolder }/artifacts`,
