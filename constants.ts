@@ -19,6 +19,11 @@ export const folders =
   artifacts: `${ rootFolder }/artifacts`,
 
   /**
+   * ?
+   */
+  gears: `${ rootFolder }/gears`,
+
+  /**
    * The path to the routes folder, which contains route definitions and handlers.
    */
   routes: `${ rootFolder }/workshop/routes`,

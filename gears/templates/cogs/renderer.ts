@@ -34,19 +34,10 @@ async function renderDocument (view: string): Promise<string>
     `<title>${ appSettings.title } | Work in progress</title>`,
     '</head>',
     '<body>',
-    await renderView(templateId),
+    '?',
     '</body>',
     '</html>'
   ];
 
   return document.join('\n');
-}
-
-/**
- * ?
- */
-async function renderView (id: string): Promise<string>
-{
-  console.log({ id });
-  return 'Work in progress...';
 }

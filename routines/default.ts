@@ -12,14 +12,14 @@ export default createTask(
     /**
      * Transforms all template files within the project.
      */
-    // await runTask('templates/build/all');
+    await runTask('templates/transform-all');
 
     /**
      * Starts file watchers if the application is in development mode.
      */
     if (isDevelopment)
     {
-      runTasks(['router/watcher', /*'templates/watcher'*/]);
+      runTasks(['router/watcher', 'templates/watcher']);
     }
   }
 );
