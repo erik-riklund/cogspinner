@@ -1,3 +1,9 @@
-@template
+[style]
+
+body
+  background pink
+
+---
+[template]
 
 <h1>Hello world</h1>

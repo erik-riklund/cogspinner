@@ -47,7 +47,7 @@ export default createTask(
  */
 function isTemplateDirective (line: string): boolean
 {
-  return /^\$[a-z]+\|/.test(line);
+  return /^<cog-[\w]+/.test(line);
 }
 
 /**

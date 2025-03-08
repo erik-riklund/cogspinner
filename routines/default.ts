@@ -1,5 +1,5 @@
 import { isDevelopment } from '~constants';
-import { createTask, runTask } from '#gear:routines';
+import { createTask, runTask, runTasks } from '#gear:routines';
 
 export default createTask(
   async () =>
@@ -12,11 +12,14 @@ export default createTask(
     /**
      * Transforms all template files within the project.
      */
-    await runTask('templates/transform-all');
+    // await runTask('templates/build/all');
 
     /**
      * Starts file watchers if the application is in development mode.
      */
-    if (isDevelopment) runTask('watchers');
+    if (isDevelopment)
+    {
+      runTasks(['router/watcher', /*'templates/watcher'*/]);
+    }
   }
 );

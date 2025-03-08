@@ -1,7 +1,7 @@
 import { createTask } from '#gear:routines';
 import { getTemplateId } from '#gear:templates';
 
-import type { TemplateElement } from '../parse';
+import type { TemplateElement } from '../types';
 
 /**
  * Task to process layout directives, replacing them with the corresponding layout template ID.
@@ -13,12 +13,14 @@ export default createTask(
     const element: TemplateElement = context.element;
     const directive = element.directive;
 
-    if (directive.startsWith('$layout|'))
+    if (directive.startsWith('<cog-layout'))
     {
-      const [layout] = directive.replace(/:$/, '').split('|').slice(1);
-      const layoutId = getTemplateId(`layouts/${ layout }.cog`);
+      element.directive = 'LAYOUT';
 
-      element.directive = `<${ layoutId }>`;
+      // const [layout] = directive.replace(/:$/, '').split('|').slice(1);
+      // const layoutId = getTemplateId(`layouts/${ layout }.cog`);
+
+      // element.directive = `<${ layoutId }>`;
     }
   }
 );

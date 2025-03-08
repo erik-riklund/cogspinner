@@ -5,9 +5,13 @@ import type { TemplateElement, Tree } from './types';
  * Defines parallel tasks for processing markup directives.
  * This ensures that these directive processing tasks run concurrently for efficiency.
  */
-createParallel('templates/markup/process-directive', [
-  'templates/markup/directives/layout', 'templates/markup/directives/component'
-]);
+createParallel(
+  'templates/markup/process-directive',
+  [
+    'templates/markup/directives/layout',
+    'templates/markup/directives/component'
+  ]
+);
 
 /**
  * Creates a task that processes the entire template tree.
@@ -59,5 +63,7 @@ async function processElement (element: TemplateElement)
  */
 async function parseString (element: string): Promise<string>
 {
-  return element.replaceAll(/\$\{\s*([\w]+)\s*\}/g, '${this.$1}');
+  return element;
+
+  // return element.replaceAll(/\$\{\s*([\w]+)\s*\}/g, '${context.$1}');
 }

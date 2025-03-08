@@ -9,9 +9,19 @@ export type Tree = (string | TemplateElement)[];
 export interface TemplateElement
 {
   /**
-   * The directive string, e.g., "$component|name".
+   * The template directive, e.g., `<cog-component>`.
    */
   directive: string;
+
+  /**
+   * ?
+   */
+  opening: string;
+
+  /**
+   * ?
+   */
+  closing: string | null;
 
   /**
    * Tree structure of child elements.

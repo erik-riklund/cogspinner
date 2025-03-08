@@ -9,7 +9,7 @@ import { viewRenderer } from './cogs/renderer';
  */
 export function getTemplateId (file: string): string
 {
-  return 't' + createHash('sha256').update(file).digest('hex').slice(0, 15);
+  return 't' + createHash('md5').update(file).digest('hex').slice(0, 11);
 }
 
 /**

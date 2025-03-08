@@ -47,5 +47,6 @@ async function renderDocument (view: string): Promise<string>
  */
 async function renderView (id: string): Promise<string>
 {
+  console.log({ id });
   return 'Work in progress...';
 }

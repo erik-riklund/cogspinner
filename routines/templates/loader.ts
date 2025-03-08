@@ -1,54 +1,18 @@
-import { existsSync } from 'fs';
 import { folders } from '~constants';
-import { getTemplateId } from '#gear:templates';
-
-import { createTask, createParallel, createSequence, runTask } from '#gear:routines';
+import { createTask } from '#gear:routines';
 
 /**
- * Defines a task for parallel execution of tasks for transforming a template.
- */
-createParallel('template/transform', ['template/styles', 'template/markup']);
-
-/**
- * Defines a sequence of tasks to handle styles within a template.
- */
-createSequence('template/styles', ['templates/styles/compile']);
-
-/**
- * Defines a sequence of tasks to transform markup within a template.
- */
-createSequence('template/markup', [
-  'templates/markup/parse', 'templates/markup/transform'
-]);
-
-/**
- * Transforms a single template file into an executeable function.
+ * ?
  */
 export default createTask(
   async (context) =>
   {
-    const { file } = context;
-    context.id = getTemplateId(file);
-    const filePath = `${ folders.templates }/${ file }`;
+    const template = await loadTemplate(context.file);
+    const sections = getSections(context.file, template);
 
-    if (existsSync(filePath))
-    {
-      const template = await loadTemplate(filePath);
-      context.sections = getSections(file, template);
-
-      context.result = {
-        style: null,
-        head: context.sections.head ?? null,
-        properties: context.sections.properties ?? {},
-        template: null,
-        dependencies: []
-      };
-
-      await runTask('template/transform', context);
-      await runTask('templates/markup/compile', context);
-      runTask('templates/save-metadata', context);
-      runTask('templates/save-template', context);
-    }
+    context.sections = {
+      head: null, style: null, template: null, ...sections
+    };
   }
 );
 
@@ -60,7 +24,7 @@ export default createTask(
  */
 async function loadTemplate (file: string): Promise<string>
 {
-  return await Bun.file(file).text();
+  return await Bun.file(`${ folders.templates }/${ file }`).text();
 }
 
 /**
@@ -73,7 +37,7 @@ async function loadTemplate (file: string): Promise<string>
 function getSections (file: string, template: string): Record<string, string>
 {
   const result: Record<string, any> = {};
-  const sections = template.split(/-{3}\r?\n/);
+  const sections = template.split(/---\r?\n/);
 
   for (const section of sections.map(s => s.trim()))
   {
@@ -108,8 +72,8 @@ function getSections (file: string, template: string): Record<string, string>
  */
 function validateSection (file: string, section: string): boolean
 {
-  const isValid = section.startsWith('@style') ||
-    section.startsWith('@head') || section.startsWith('@template');
+  const isValid = section.startsWith('[style]') ||
+    section.startsWith('[head]') || section.startsWith('[template]');
 
   if (!isValid)
   {
@@ -117,7 +81,7 @@ function validateSection (file: string, section: string): boolean
       `Invalid section in template "${ file }":\n${ section }`,
     );
     console.error(
-      'Sections must start with a type declaration: "@style", "@head" or "@template".'
+      'Sections must start with a type declaration: [style], [head] or [template].'
     );
   }
 
@@ -155,8 +119,8 @@ function validateSectionType (file: string, type: string): boolean
  */
 function getSectionParts (section: string): [type: string, content: string]
 {
-  const type = section.slice(1, section.indexOf('\n')).trim();
-  const content = section.slice(section.indexOf('\n') + 1).trim();
+  const type = section.slice(1, section.indexOf(']')).trim();
+  const content = section.slice(section.indexOf(']') + 1).trim();
 
   return [type, content];
 }

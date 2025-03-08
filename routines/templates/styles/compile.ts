@@ -1,6 +1,5 @@
 import stylus from 'stylus';
 import { folders } from '~constants';
-
 import { createTask } from '#gear:routines';
 
 /**
@@ -14,7 +13,7 @@ export default createTask(
 
     if (style)
     {
-      context.result.style = stylus(style)
+      context.sections.style = stylus(style)
         .set('include', folders.styles)
         .set('include', `${ folders.root }/gears/styles`)
         .set('compress', true).render();
