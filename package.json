@@ -18,10 +18,9 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "@lit-labs/ssr": "^3.3.1",
     "clean-css": "^5.3.3",
-    "hono": "^4.7.2",
-    "lit": "^3.2.1"
+    "ejs": "^3.1.10",
+    "hono": "^4.7.2"
   },
   "scripts": {
     "dev": "conc \"bun dev:app\" \"bun dev:tasks\" --names \"app,tasks\" --prefix-colors \"cyan,yellow\"",

@@ -1,4 +1,7 @@
+import { folders } from '~constants';
+import { getTemplateId } from '#gear:templates';
 import { appSettings } from '~workshop/app.config';
+
 import type { Context, Next } from 'hono';
 
 /**
@@ -8,7 +11,9 @@ export async function viewRenderer (
   context: Context, next: Next): Promise<void>
 {
   context.setRenderer(
-    async (view) => context.html(renderDocument())
+    async (view) => context.html(
+      await renderDocument(await view)
+    )
   );
   await next();
 };
@@ -16,8 +21,10 @@ export async function viewRenderer (
 /**
  * ?
  */
-function renderDocument (): string
+async function renderDocument (view: string): Promise<string>
 {
+  const templateId = getTemplateId(`views/${ view }.cog`);
+
   let document = [
     '<!DOCTYPE html>',
     `<html lang="${ appSettings.lang }">`,
@@ -27,10 +34,18 @@ function renderDocument (): string
     `<title>${ appSettings.title } | Work in progress</title>`,
     '</head>',
     '<body>',
-    '<h1>Work in progress</h1>',
+    await renderView(templateId),
     '</body>',
     '</html>'
   ];
 
   return document.join('\n');
+}
+
+/**
+ * ?
+ */
+async function renderView (id: string): Promise<string>
+{
+  return 'Work in progress...';
 }

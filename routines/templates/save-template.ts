@@ -11,11 +11,13 @@ export default createTask(
     const { result } = context;
     const targetFolder = `${ folders.artifacts }/${ context.id }`;
 
-    if (result.head !== null)
-      Bun.write(`${ targetFolder }/head.html`, result.head);
-    if (result.style !== null)
-      Bun.write(`${ targetFolder }/styles.css`, result.style);
+    console.log(context);
 
-    Bun.write(`${ targetFolder }/template.ts`, result.template.join('\n'));
+    // if (result.head !== null)
+    //   Bun.write(`${ targetFolder }/head.html`, result.head);
+    // if (result.style !== null)
+    //   Bun.write(`${ targetFolder }/styles.css`, result.style);
+
+    // Bun.write(`${ targetFolder }/template.ts`, result.template.join('\n'));
   }
 );
