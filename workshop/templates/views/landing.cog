@@ -16,8 +16,8 @@ body { background: yellowgreen; }
 
 <h1 class="test">Hello world</h1>
 
-$layout|test
+$layout|test:
   <p>Should be rendered inside the "test" layout</p>
 
-$component|hello { message: 'Hello world' }
-  <h1>This component has a title</h1>
+$component|hello { message: "Hello world" }
+  <h1 slot="header">This component has a title and a message.</h1>

@@ -39,12 +39,15 @@ export default createTask(
       context.result = {
         style: null,
         head: context.sections.head ?? null,
-        template: null
+        properties: context.sections.properties ?? {},
+        template: null,
+        dependencies: []
       };
 
       await runTask('template/transform', context);
-
-      console.log({ tree: context.tree });
+      await runTask('templates/markup/compile', context);
+      runTask('templates/save-metadata', context);
+      runTask('templates/save-template', context);
     }
   }
 );
@@ -69,7 +72,7 @@ async function loadTemplate (file: string): Promise<string>
  */
 function getSections (file: string, template: string): Record<string, string>
 {
-  const result: Record<string, string> = {};
+  const result: Record<string, any> = {};
   const sections = template.split(/-{3}\r?\n/);
 
   for (const section of sections.map(s => s.trim()))
@@ -78,7 +81,17 @@ function getSections (file: string, template: string): Record<string, string>
     {
       const [type, content] = getSectionParts(section);
 
-      if (validateSectionType(file, type)) result[type] = content;
+      if (validateSectionType(file, type))
+      {
+        if (/^template\s+\[/.test(type))
+        {
+          result.properties = {};
+          console.log('parsing properties...');
+
+          result[type] = content.slice(content.indexOf(']') + 1);
+        }
+        else result[type] = content;
+      }
     }
   }
 
@@ -123,7 +136,7 @@ function validateSectionType (file: string, type: string): boolean
 {
   const validTypes = ['style', 'head', 'template'];
 
-  if (!validTypes.includes(type))
+  if (!validTypes.includes(type) && !/^template\s+\[/.test(type))
   {
     console.error(
       `Invalid section type '${ type }' in template "${ file }".`,

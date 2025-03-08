@@ -4,9 +4,11 @@
   "module": "main.ts",
   "type": "module",
   "devDependencies": {
+    "@types/acorn": "^6.0.4",
     "@types/bun": "latest",
     "@types/clean-css": "^4.2.11",
     "@types/stylus": "^0.48.43",
+    "acorn": "^8.14.1",
     "concurrently": "^9.1.2",
     "css-simple-parser": "^3.0.2",
     "stylus": "^0.64.0",

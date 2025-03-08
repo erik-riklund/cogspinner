@@ -15,7 +15,7 @@ export default createTask(
 
     if (directive.startsWith('$layout|'))
     {
-      const [layout] = directive.split('|').slice(1);
+      const [layout] = directive.replace(/:$/, '').split('|').slice(1);
       const layoutId = getTemplateId(`layouts/${ layout }.cog`);
 
       element.directive = `<${ layoutId }>`;

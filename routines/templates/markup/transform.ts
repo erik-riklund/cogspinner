@@ -1,6 +1,5 @@
 import { createTask, createParallel, runTask } from '#gear:routines';
-
-import type { TemplateElement, Tree } from './parse';
+import type { TemplateElement, Tree } from './types';
 
 /**
  * Defines parallel tasks for processing markup directives.
@@ -26,12 +25,15 @@ export default createTask(
  */
 async function processTree (tree: Tree)
 {
-  for (const element of tree)
+  for (let i = 0; i < tree.length; i++)
   {
+    const element = tree[i];
+
     if (typeof element === 'object')
     {
       await processElement(element);
     }
+    else tree[i] = await parseString(element);
   }
 }
 
@@ -50,4 +52,12 @@ async function processElement (element: TemplateElement)
   }
 
   await runTask('templates/markup/process-directive', { element });
+}
+
+/**
+ * ?
+ */
+async function parseString (element: string): Promise<string>
+{
+  return element.replaceAll(/\$\{\s*([\w]+)\s*\}/g, '${this.$1}');
 }
