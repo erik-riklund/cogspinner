@@ -1,12 +1,4 @@
-@head:
-
-<style>
-  div {
-    color: green;
-  }
-</style>
----
 @body:
 
-<div>I am your father.</div>
-<cog-placeholder name="default" />
+placeholder "main":
+  <p>this placeholder has default content</p>

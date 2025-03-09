@@ -4,7 +4,8 @@ import { folders } from '~constants';
 import { createTask, createWatcher, runTask } from '#gear:routines';
 
 /**
- * ?
+ * Sets up a watcher on the templates directory to trigger
+ * template transformation tasks on file changes.
  */
 export default createTask(
   async (context) =>

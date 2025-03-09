@@ -1,15 +1,5 @@
-@head:
-
-<style>
-body {
-  background: aliceblue;
-}
-</style>
-
----
 @body:
 layout| global
 
-<cog-position name="default">
+position "main":
   <h1>hello world</h1>
-</cog-position>

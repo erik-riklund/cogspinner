@@ -5,7 +5,9 @@ import { getTemplateId } from '#gear:templates';
 import { createTask, runTask } from '#gear:routines';
 
 /**
- * ?
+ * A task that reads a template file, parses its segments, and executes tasks
+ * to compile styles and translate the body. It writes the compiled Nunjucks
+ * template and its metadata to the artifacts directory.
  */
 export default createTask(
   async (context) =>
@@ -45,12 +47,12 @@ export default createTask(
 
     await Promise.allSettled(tasks);
 
-    if (Array.isArray(context.lines))
+    if (Array.isArray(context.output))
     {
       const templateId = getTemplateId(file);
       const targetFolder = `${ folders.artifacts }/templates`;
 
-      await Bun.write(`${ targetFolder }/${ templateId }.njk`, context.lines.join('\n'));
+      await Bun.write(`${ targetFolder }/${ templateId }.njk`, context.output.join('\n'));
 
       const metadata = {
         head: context.head ?? null,

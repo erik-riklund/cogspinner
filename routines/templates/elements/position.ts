@@ -1,27 +1,24 @@
 import { createTask } from '#gear:routines';
-import type { ElementContext } from '../translate-body';
+import type { ElementContext } from './types';
 
 /**
- * ?
+ * Task to transform position elements into Nunjucks block tags.
  */
 export default createTask<ElementContext>(
   async (context) =>
   {
-    const { index, lines } = context;
-    const line = lines[index];
+    const element = context.element;
 
-    if (line.startsWith('<cog-position'))
+    if (element.openingTag.startsWith('position'))
     {
-      const match = line.match(/^<cog-position\s+name="([\w\/\-]+)">/);
+      const pattern = /^position\s+"([\w-]+)":$/;
+      const match = element.openingTag.match(pattern);
 
       if (Array.isArray(match))
       {
-        lines[index] = `{% block ${ match[1] } %}`;
+        element.openingTag = `{% block ${ match[1] } %}`;
+        element.closingTag = '{% endblock %}';
       }
-    }
-    else if (line === '</cog-position>')
-    {
-      lines[index] = '{% endblock %}';
     }
   }
 );
