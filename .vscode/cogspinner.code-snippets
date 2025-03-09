@@ -29,5 +29,22 @@
       "  }",
       ");"
     ]
+  },
+
+  "route":
+  {
+    "prefix": "route",
+    "description": "Boilerplate for a route module.",
+    "body": [
+      "import { route } from '#gear:router';",
+      "",
+      "/**",
+      " * ?",
+      " */",
+      "export default route(",
+      "  {",
+      "  }",
+      ");"
+    ]
   }
 }
