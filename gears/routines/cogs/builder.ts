@@ -9,7 +9,7 @@ import type { TaskFunction, PipelineTaskFunction } from '#type:routines';
  * @param workload The task function to be executed.
  * @returns The provided task function.
  */
-export function task<TContext extends object = object>
+export function createTask<TContext extends Object = Record<string, any>>
   (workload: TaskFunction<TContext>): TaskFunction<TContext>
 {
   return workload;
@@ -23,7 +23,7 @@ export function task<TContext extends object = object>
  * @param workload The pipeline task function to be executed.
  * @returns The provided pipeline task function.
  */
-export function pipeTask<TContext extends object = object>
+export function createDynamicTask<TContext extends Object = Record<string, any>>
   (workload: PipelineTaskFunction<TContext>): PipelineTaskFunction<TContext>
 {
   return workload;
@@ -37,15 +37,14 @@ export function pipeTask<TContext extends object = object>
  * @param name The name of the sequence task.
  * @param tasks An array of task names to be executed in sequence.
  */
-export function sequence<TContext extends object = object> (name: string, tasks: string[]): void
+export function createSequence<TContext extends Object = Record<string, any>> (name: string, tasks: string[]): void
 {
   registerTask(
     name,
-    task<TContext>(
+    createTask<TContext>(
       async (context) =>
       {
-        for (const task of tasks)
-          await runTask<TContext>(task, context);
+        for (const task of tasks) await runTask<TContext>(task, context);
       }
     )
   );
@@ -59,11 +58,11 @@ export function sequence<TContext extends object = object> (name: string, tasks:
  * @param name The name of the parallel task.
  * @param tasks An array of task names to be executed in parallel.
  */
-export function parallel<TContext extends object = object> (name: string, tasks: string[]): void
+export function createParallel<TContext extends Object = Record<string, any>> (name: string, tasks: string[]): void
 {
   registerTask(
     name,
-    task<TContext>(
+    createTask<TContext>(
       async (context) =>
       {
         await Promise.allSettled(
@@ -75,18 +74,19 @@ export function parallel<TContext extends object = object> (name: string, tasks:
 }
 
 /**
- * Registers a task that executes a pipeline of tasks. The function creates a task that executes the provided
- * list of task names as a pipeline, where each task calls the `next` function to proceed to the next task.
+ * Creates a task that executes the provided list of task names as a dynamic flow, where each task calls 
+ * the `next` function to proceed to the next task. Code that comes after `await next()` will be executed 
+ * once the flow returns to the current task.
  *
  * @typeparam `TContext` The type of the context object, defaulting to a generic object.
  * @param name The name of the pipeline task.
  * @param tasks An array of task names to be executed in the pipeline.
  */
-export function pipeline<TContext extends object = object> (name: string, tasks: string[]): void
+export function createDynamicFlow<TContext extends Object = Record<string, any>> (name: string, tasks: string[]): void
 {
   registerTask(
     name,
-    task<TContext>(
+    createTask<TContext>(
       async (context) =>
       {
         let currentTaskIndex = 0;
@@ -99,7 +99,7 @@ export function pipeline<TContext extends object = object> (name: string, tasks:
           if (currentTaskIndex < workloads.length)
           {
             const currentTask = workloads[currentTaskIndex++];
-            return currentTask(context, next);
+            return typeof currentTask === 'function' ? currentTask(context, next) : Promise.resolve();
           }
         }
 

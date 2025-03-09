@@ -1,5 +1,4 @@
-import { createHash } from 'crypto';
-import { sequence, parallel, pipeline } from './builder';
+import { existsSync, statSync } from 'fs';
 import type { TaskFunction } from '#type:routines';
 
 /**
@@ -15,12 +14,17 @@ const tasks = new Map<string, Function>();
  * @param name The name of the task to execute.
  * @param context The context object to pass to the task function. Defaults to an empty object.
  * @returns A promise that resolves when the task execution is complete.
- * @throws Error if the task with the given name does not exist.
  */
 export function runTask<TContext extends object = object>
   (name: string, context: TContext = {} as TContext): Promise<void>
 {
-  return getTask(name)(context);
+  const task = getTask(name);
+  if (typeof task === 'function') return task(context);
+
+  if (tasks.has(name))
+    console.error(`The task "${ name }" does not export a function.`);
+
+  return Promise.resolve();
 }
 
 /**
@@ -38,28 +42,29 @@ export function runTasks (tasks: string[]): Promise<void>[]
 }
 
 /**
- * ?
- */
-export function runSequence (tasks: string[]): void
-{
-  const identifier = createHash('md5').update(tasks.join(',')).digest('hex');
-  sequence(identifier, tasks); runTask(identifier, {});
-}
-
-/**
  * Retrieves a registered task by its name.
  *
  * @typeparam `T` The expected type of the task function, defaulting to TaskFunction.
  * @param name The name of the task to retrieve.
  * @returns The task function.
- * @throws Error if the task with the given name does not exist.
  */
-export function getTask<T extends Function = TaskFunction> (name: string): T
+export function getTask<T extends Function = TaskFunction> (name: string): T | void
 {
-  if (!tasks.has(name))
-    throw new Error(`Task "${ name }" does not exist.`);
+  if (tasks.has(name))
+    return tasks.get(name) as T;
 
-  return tasks.get(name) as T;
+  console.error(`The task "${ name }" does not exist.`);
+}
+
+/**
+ * Checks if a task with the given name is registered.
+ *
+ * @param name The name of the task to check.
+ * @returns `true` if the task exists, otherwise `false`.
+ */
+export function taskExists (name: string): boolean
+{
+  return tasks.has(name);
 }
 
 /**
@@ -72,6 +77,7 @@ export function getTask<T extends Function = TaskFunction> (name: string): T
 export function registerTask<T extends Function = TaskFunction> (name: string, workload: T): void
 {
   if (!tasks.has(name)) tasks.set(name, workload);
+  else console.error(`The task "${ name }" already exists.`);
 }
 
 /**
@@ -83,9 +89,12 @@ export function registerTask<T extends Function = TaskFunction> (name: string, w
 export async function registerTaskFromFile (path: string): Promise<void>
 {
   const workload = await loadTaskFromFile(`${ process.cwd() }/routines/${ path }`);
-  const identifier = createTaskIdentifier(path);
 
-  registerTask(identifier, workload);
+  if (typeof workload === 'function')
+  {
+    const identifier = createTaskIdentifier(path);
+    registerTask(identifier, workload);
+  }
 }
 
 /**
@@ -105,7 +114,20 @@ function createTaskIdentifier (path: string): string
  * @param path The absolute file path.
  * @returns A promise that resolves with the loaded task function.
  */
-async function loadTaskFromFile (path: string): Promise<Function>
+async function loadTaskFromFile (path: string): Promise<Function | void>
 {
-  return (await import(path)).default;
+  if (existsSync(path))
+  {
+    try
+    {
+      //? to avoid stupid errors, we check if the file is larger than 125 bytes,
+      //? which is roughly the size of the code output by the `task` snippet.
+
+      if (statSync(path).size >= 125) return (await import(path)).default;
+    }
+    catch (error)
+    {
+      console.error(`Failed to load task from "${ path }". Try restarting the task service.`);
+    }
+  }
 }

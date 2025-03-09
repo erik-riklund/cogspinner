@@ -1,4 +1,4 @@
-import { task } from '#gear:routines';
+import { createTask } from '#gear:routines';
 import type { RouteManifestContext } from './context';
 
 /**
@@ -7,7 +7,7 @@ import type { RouteManifestContext } from './context';
  * definitions. The generated import statements and route definitions are then stored in the
  * `manifest` property of the context object.
  */
-export default task<RouteManifestContext>(
+export default createTask<RouteManifestContext>(
   async (context) =>
   {
     let i = 1;

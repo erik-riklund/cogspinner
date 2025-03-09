@@ -1,30 +1,25 @@
-import { task, sequence, parallel, runTask } from '#gear:routines';
+import { isDevelopment } from '~constants';
+import { createTask, runTask, runTasks } from '#gear:routines';
 
-/**
- * Defines a task that checks if the command-line arguments passed to the process
- * include the flag `-d`. If it's present, it executes the `development` task.
- * Otherwise, it executes the `production` task.
- */
-export default task(
+export default createTask(
   async () =>
   {
     /**
-     * ?
+     * Generates the manifest file for the application's router.
      */
-    sequence('router-manifest', [
-      'router/find-route-files',
-      'router/prepare-route-list',
-      'router/save-manifest'
-    ]);
+    await runTask('router/create-manifest');
 
     /**
-     * ?
+     * Transforms all template files within the project.
      */
-    runTask('router-manifest');
+    await runTask('templates/transform-all');
 
     /**
-     * ?
+     * Starts file watchers if the application is in development mode.
      */
-    if (process.argv.includes('-d')) runTask('watchers');
+    if (isDevelopment)
+    {
+      runTasks(['router/watcher', 'templates/watcher']);
+    }
   }
 );

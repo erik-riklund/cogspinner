@@ -1,14 +1,28 @@
 {
-  "test":
+  "import":
+  {
+    "prefix": "import",
+    "description": "Import elements from an external module.",
+    "body": "import { ${2} } from '${1}';"
+  },
+
+  "import-type":
+  {
+    "prefix": "import-type",
+    "description": "Import types from an external module.",
+    "body": "import type { ${2} } from '${1}';"
+  },
+
+  "task":
   {
     "prefix": "task",
     "description": "Boilerplate for a basic task.",
     "body": [
-      "import { task } from '#gear:routines';\n",
+      "import { createTask } from '#gear:routines';\n",
       "/**",
       " * ?",
       " */",
-      "export default task(",
+      "export default createTask(",
       "  async (context) =>",
       "  {",
       "",

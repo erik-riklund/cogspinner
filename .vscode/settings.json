@@ -1,7 +1,6 @@
 {
   "files.associations": {
-    "*.njk": "html",
-    "*.sly": "html"
+    "*.cog": "html"
   },
   "files.exclude": {
     "**/node_modules": true,
@@ -10,6 +9,7 @@
 
   "editor.wordWrap": "on",
   "editor.formatOnSave": true,
+  "editor.links": false,
 
   "better-comments.multilineComments": true,
   "better-comments.tags": [
@@ -28,6 +28,7 @@
   "css.format.spaceAroundSelectorSeparator": true,
   "css.completion.completePropertyWithSemicolon": true,
 
+  "html.format.enable": false,
   "html.format.extraLiners": "html, body",
   "html.format.indentInnerHtml": true,
   "html.format.contentUnformatted": "style, script",
