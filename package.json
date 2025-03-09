@@ -9,6 +9,7 @@
     "@types/html-minifier": "^4.0.5",
     "@types/nunjucks": "^3.2.6",
     "@types/stylus": "^0.48.43",
+    "chokidar": "^4.0.3",
     "concurrently": "^9.1.2",
     "css-simple-parser": "^3.0.2",
     "stylus": "^0.64.0",
@@ -25,7 +26,7 @@
   },
   "scripts": {
     "dev": "conc \"bun dev:app\" \"bun dev:tasks\" --names \"app,tasks\" --prefix-colors \"cyan,yellow\"",
-    "dev:app": "wait-on artifacts/routes.ts && bun --watch main.ts",
+    "dev:app": "wait-on artifacts/routes.ts && bun --watch main.ts -d",
     "dev:tasks": "bun --watch gears/routines/index.ts -d"
   }
 }

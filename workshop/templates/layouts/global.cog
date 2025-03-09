@@ -1,0 +1,12 @@
+@head:
+
+<style>
+  div {
+    color: green;
+  }
+</style>
+---
+@body:
+
+<div>I am your father.</div>
+<cog-placeholder name="default" />

@@ -1,14 +1,8 @@
-@style:
-
-h1
-  color red
-
----
 @head:
 
 <style>
 body {
-  background: yellow;
+  background: aliceblue;
 }
 </style>
 

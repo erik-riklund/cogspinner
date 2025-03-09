@@ -16,8 +16,8 @@ export default createTask(
         {
           const absolutePath = `${ folders.templates }/${ file }`;
 
-          if (existsSync(absolutePath) && file.endsWith('.cog'))
-            runTask('templates/transform-one', { file: file.replaceAll('\\', '/') });
+          if (existsSync(absolutePath) && (file.endsWith('.cog') || file.endsWith('.styl')))
+            runTask('templates/transform-one', { file: file.replaceAll('\\', '/').replace(/\.styl$/, '.cog') });
         }
       }
     );

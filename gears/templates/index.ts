@@ -1,5 +1,6 @@
 import { createHash } from 'crypto';
 import { viewRenderer } from './cogs/renderer';
+import { getTemplateData } from './cogs/cache';
 
 /**
  * Generates a unique identifier for a template file based on the file's name.
@@ -16,4 +17,4 @@ export function getTemplateId (file: string): string
  * Re-exports the `viewRenderer` function to create a more convenient and
  * organized API for other parts of the application.
  */
-export { viewRenderer };
+export { getTemplateData, viewRenderer };
