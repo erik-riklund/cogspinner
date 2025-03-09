@@ -25,7 +25,7 @@ export default createTask(
     if (existsSync(stylesheet))
     {
       context.style = await Bun.file(stylesheet).text();
-      tasks.push(runTask('templates/compile-styles', context));
+      tasks.push(runTask('templates/transform-styles', context));
     }
 
     for (const segment of segments.map(x => x.trim()))
@@ -47,8 +47,46 @@ export default createTask(
 
     await Promise.allSettled(tasks);
 
+    //? refactor the class scoping process below:
+
     if (Array.isArray(context.output))
     {
+      const output: string[] = context.output;
+
+      if (Array.isArray(context.classes))
+      {
+        const classes: string[] = context.classes;
+        const suffix = getTemplateId(file).slice(0, 6);
+
+        for (let i = 0; i < output.length; i++)
+        {
+          if (output[i].includes('class="'))
+          {
+            const element = output[i].slice(1, output[i].indexOf(' '));
+
+            for (const selector of classes)
+            {
+              if (selector.startsWith(`${ element }.`) || selector.startsWith('.'))
+              {
+                const classList = output[i].match(/class="([^"]+)"/)![1].split(' ');
+
+                for (let c = 0; c < classList.length; c++)
+                {
+                  if (classList[c] === selector.slice(selector.indexOf('.') + 1))
+                  {
+                    classList[c] = `${ classList[c] }-${ suffix }`;
+                  }
+                }
+
+                output[i] = output[i].replace(
+                  /class="([^"]+)"/, `class="${ classList.join(' ') }"`
+                );
+              }
+            }
+          }
+        }
+      }
+
       const templateId = getTemplateId(file);
       const targetFolder = `${ folders.artifacts }/templates`;
 
