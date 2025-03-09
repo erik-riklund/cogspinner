@@ -19,7 +19,7 @@ export const folders =
   artifacts: `${ rootFolder }/artifacts`,
 
   /**
-   * ?
+   * The path to the gears folder, which contains the source code for the application.
    */
   gears: `${ rootFolder }/gears`,
 

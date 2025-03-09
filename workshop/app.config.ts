@@ -19,7 +19,7 @@ export const serverOptions: ServerOptions =
 export const appSettings: AppSettings =
 {
   /**
-   * ?
+   * The language code for the application (default: `en`).
    */
   lang: 'en',
 

@@ -1,22 +1,23 @@
 import { createTask } from '#gear:routines';
-import type { ElementContext } from '../translate-body';
+import type { ElementContext } from './types';
 
 /**
- * ?
+ * Task to transform placeholder elements into Nunjucks block tags.
  */
 export default createTask<ElementContext>(
   async (context) =>
   {
-    const { index, lines } = context;
-    const line = lines[index];
+    const element = context.element;
 
-    if (line.startsWith('<cog-placeholder'))
+    if (element.openingTag.startsWith('placeholder'))
     {
-      const match = line.match(/^<cog-placeholder\s+name="([\w\/\-]+)"\s*\/>/);
+      const pattern = /^placeholder\s+"([\w-]+)":?$/;
+      const match = element.openingTag.match(pattern);
 
       if (Array.isArray(match))
       {
-        lines[index] = `{% block ${ match[1] } %}{% endblock %}`;
+        element.openingTag = `{% block ${ match[1] } %}`;
+        element.closingTag = '{% endblock %}';
       }
     }
   }
