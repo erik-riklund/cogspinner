@@ -56,9 +56,8 @@ async function renderDocument (
   const id = getTemplateId(`views/${ view }.cog`);
   const data = await getTemplateData(id);
 
-  const stylesheet = optimizer.minify(
-    Object.values(data.style).join('')
-  );
+  const devtools = `<script defer src="/assets/dev-tools.js"></script>`;
+  const stylesheet = optimizer.minify(Object.values(data.style).join(''));
 
   let document = [
     '<!DOCTYPE html>',
@@ -71,6 +70,7 @@ async function renderDocument (
     `<title>${ appSettings.title } | Work in progress</title>`,
     ...Object.values(data.head).map(content => content),
     '<style>', stylesheet.styles, '</style>',
+    isDevelopment ? devtools : '',
     '</head>',
     '<body>',
     engine.render(`${ id }.njk`, context),
