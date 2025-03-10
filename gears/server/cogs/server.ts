@@ -1,5 +1,7 @@
 import { Hono } from 'hono';
 import { serveStatic } from 'hono/bun';
+
+import { isDevelopment } from '~constants';
 import { initializeRouter } from '#gear:router';
 import { viewRenderer } from '#gear:templates';
 
@@ -8,7 +10,8 @@ import type { ServerOptions, ServerMiddleware } from '#type:server';
 /**
  * Creates a Hono server instance with specified options and middlewares.
  */
-export function createServer (options: ServerOptions = {}, middlewares: ServerMiddleware[] = [])
+export function createServer (
+  options: ServerOptions = {}, middlewares: ServerMiddleware[] = [])
 {
   return {
     /**
@@ -17,6 +20,9 @@ export function createServer (options: ServerOptions = {}, middlewares: ServerMi
     start: async function ()
     {
       const server = new Hono();
+
+      if (isDevelopment)
+        server.use('/dev', (await import('./reload')).default);
 
       server.use('/assets/*', serveStatic({ root: 'public' }));
       initializeRouter(server, [{ handler: viewRenderer }, ...middlewares]);
